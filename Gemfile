@@ -35,9 +35,14 @@ group :development, :test do
   gem 'figaro'
   gem 'pry-byebug'
   gem 'pry-rails'
-  gem 'rspec-rails'
 end
 
 group :development do
   gem "web-console"
+end
+
+group :test do
+  gem 'database_cleaner-active_record'
+  gem 'rspec-rails'
+  gem 'shoulda-matchers'
 end
