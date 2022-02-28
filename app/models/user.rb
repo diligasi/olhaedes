@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :recoverable,
          :rememberable, :validatable
 
+  belongs_to :region, optional: true
+
   enum role: {
     admin:      0,
     supervisor: 1,
@@ -14,7 +16,7 @@ class User < ApplicationRecord
   validates :name,     presence: true
   validates :cpf,      presence: true, uniqueness: true, length: { is: 11 }
   validates :email,    presence: true, uniqueness: { case_sensitive: false }, format: { with: URI::MailTo::EMAIL_REGEXP }
-  # validates :region,   presence: true, unless: -> { admin? }
+  validates :region,   presence: true, unless: -> { admin? }
   validates :role,     inclusion: { in: roles.keys }
   validates :status,   inclusion: { in: [true, false] }
 

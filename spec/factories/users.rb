@@ -1,5 +1,7 @@
 FactoryBot.define do
   factory :user do
+    association :region
+
     name   { Faker::Name.name }
     cpf    { Faker::CPF.number }
     status { true }
@@ -14,7 +16,8 @@ FactoryBot.define do
     end
 
     trait :with_admin_role do
-      role { :admin }
+      role   { :admin }
+      region { nil }
     end
 
     trait :with_supervisor_role do

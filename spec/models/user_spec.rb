@@ -3,6 +3,12 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   subject { build :user }
 
+  describe 'relationships' do
+    let(:admin_user) { create(:user, :with_admin_role) }
+
+    it { expect(admin_user).to belong_to(:region).optional }
+  end
+
   describe 'role enum' do
     let(:current_roles) { %i[admin supervisor lab field] }
 
@@ -41,6 +47,18 @@ RSpec.describe User, type: :model do
       it { is_expected.to validate_presence_of(:password) }
       it { is_expected.to validate_length_of(:password).is_at_least(6) }
     end
+
+    context 'when it\'s an admin' do
+      before { allow(subject).to receive(:admin?).and_return(true) }
+
+      it { is_expected.not_to validate_presence_of(:region) }
+    end
+
+    context 'when it\'s not an admin' do
+      before { allow(subject).to receive(:admin?).and_return(false) }
+
+      it { is_expected.to validate_presence_of(:region) }
+    end
   end
 
   describe 'methods' do
@@ -51,10 +69,5 @@ RSpec.describe User, type: :model do
       subject.cpf = cpf
       expect(subject.cpf).to eq(cpf.delete('^0-9'))
     end
-  end
-
-  describe 'relationships' do
-    pending "add some examples to (or delete) #{__FILE__}"
-    # it { expect(subject).to respond_to :customer }
   end
 end
