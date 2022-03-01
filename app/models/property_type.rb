@@ -1,5 +1,5 @@
 class PropertyType < ApplicationRecord
-  # has_one :field_form
+  has_one :field_form
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 

@@ -6,6 +6,8 @@ class User < ApplicationRecord
 
   belongs_to :region, optional: true
 
+  has_many :field_forms
+
   enum role: {
     admin:      0,
     supervisor: 1,

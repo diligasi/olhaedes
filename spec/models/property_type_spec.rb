@@ -4,7 +4,7 @@ RSpec.describe PropertyType, type: :model do
   subject { build :property_type }
 
   describe 'relationships' do
-    # it { should have_one(:field_form) }
+    it { should have_one(:field_form) }
   end
 
   describe 'validations' do
@@ -14,7 +14,7 @@ RSpec.describe PropertyType, type: :model do
 
   describe 'scope' do
     describe '.visited_per_range' do
-      # soon...
+      pending "Add this test after dashboard charts were implemented | #{__FILE__}"
     end
   end
 end

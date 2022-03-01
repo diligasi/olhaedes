@@ -7,6 +7,7 @@ RSpec.describe User, type: :model do
     let(:admin_user) { create(:user, :with_admin_role) }
 
     it { expect(admin_user).to belong_to(:region).optional }
+    it { expect(admin_user).to have_many(:field_forms) }
   end
 
   describe 'role enum' do
@@ -22,7 +23,6 @@ RSpec.describe User, type: :model do
 
     context 'cpf' do
       it { is_expected.to validate_presence_of(:cpf) }
-      it { is_expected.to validate_uniqueness_of(:cpf).ignoring_case_sensitivity }
 
       it 'does not allow cpf with more than 11 characters' do
         subject.cpf = '0123456789123456'

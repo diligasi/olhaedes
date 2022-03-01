@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_02_28_222910) do
+ActiveRecord::Schema[7.0].define(version: 2022_02_28_232407) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,6 +19,30 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_28_222910) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "field_forms", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "property_type_id", null: false
+    t.integer "status", default: 0
+    t.string "street"
+    t.string "number"
+    t.string "complement"
+    t.string "block"
+    t.string "district"
+    t.string "city"
+    t.string "state"
+    t.string "country"
+    t.string "zipcode"
+    t.integer "visit_status"
+    t.text "visit_comment"
+    t.boolean "larvae_found", default: false
+    t.boolean "larvicide", default: false
+    t.boolean "rodenticide", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["property_type_id"], name: "index_field_forms_on_property_type_id"
+    t.index ["user_id"], name: "index_field_forms_on_user_id"
   end
 
   create_table "property_types", force: :cascade do |t|
@@ -54,6 +78,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_28_222910) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "field_forms", "property_types"
+  add_foreign_key "field_forms", "users"
   add_foreign_key "regions", "departments"
   add_foreign_key "users", "regions"
 end
