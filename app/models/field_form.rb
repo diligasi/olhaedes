@@ -57,9 +57,9 @@ class FieldForm < ApplicationRecord
       .where(test_tubes: { shed_type_id: type })
   }
 
-  scope :by_larva_specy, lambda { |specy|
-    includes({ test_tubes: [:larvas] }, :user)
-      .where(test_tubes: { larvas: { larva_specy_id: specy } })
+  scope :by_larva_species, lambda { |species|
+    includes({ test_tubes: [:larvae] }, :user)
+      .where(test_tubes: { larvae: { larva_species_id: species } })
   }
 
   scope :by_larvae_amount, lambda { |amount|

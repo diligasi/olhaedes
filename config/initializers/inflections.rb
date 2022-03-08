@@ -16,6 +16,7 @@
 # end
 
 ActiveSupport::Inflector.inflections(:en) do |inflect|
+  inflect.irregular 'institutional', 'institutional'
   inflect.irregular 'species', 'species'
   inflect.irregular 'larva', 'larvae'
 end

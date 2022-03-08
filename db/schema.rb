@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_06_070028) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_08_032345) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -52,11 +52,28 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_06_070028) do
     t.index ["user_id"], name: "index_field_forms_on_user_id"
   end
 
+  create_table "institutional", force: :cascade do |t|
+    t.string "phone_numbers", null: false
+    t.text "description", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "larva_species", force: :cascade do |t|
     t.string "name", null: false
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "larvae", force: :cascade do |t|
+    t.bigint "test_tube_id", null: false
+    t.bigint "larva_species_id", null: false
+    t.text "comments"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["larva_species_id"], name: "index_larvae_on_larva_species_id"
+    t.index ["test_tube_id"], name: "index_larvae_on_test_tube_id"
   end
 
   create_table "property_types", force: :cascade do |t|
@@ -113,6 +130,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_06_070028) do
 
   add_foreign_key "field_forms", "property_types"
   add_foreign_key "field_forms", "users"
+  add_foreign_key "larvae", "larva_species"
+  add_foreign_key "larvae", "test_tubes"
   add_foreign_key "regions", "departments"
   add_foreign_key "test_tubes", "field_forms"
   add_foreign_key "test_tubes", "shed_types"

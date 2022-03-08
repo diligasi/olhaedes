@@ -6,7 +6,7 @@ RSpec.describe TestTube, type: :model do
   describe 'relationships' do
     it { should belong_to(:shed_type).optional }
     it { should belong_to(:field_form) }
-    # it { should have_many(:larvae) }
+    it { should have_many(:larvae) }
   end
 
   describe 'validations' do
