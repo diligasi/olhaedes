@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_06_064324) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_06_070028) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -81,6 +81,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_06_064324) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "test_tubes", force: :cascade do |t|
+    t.bigint "field_form_id", null: false
+    t.bigint "shed_type_id", null: false
+    t.string "code", null: false
+    t.integer "collected_amount"
+    t.text "comments"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["field_form_id"], name: "index_test_tubes_on_field_form_id"
+    t.index ["shed_type_id"], name: "index_test_tubes_on_shed_type_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "cpf", limit: 11, default: "", null: false
@@ -102,5 +114,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_06_064324) do
   add_foreign_key "field_forms", "property_types"
   add_foreign_key "field_forms", "users"
   add_foreign_key "regions", "departments"
+  add_foreign_key "test_tubes", "field_forms"
+  add_foreign_key "test_tubes", "shed_types"
   add_foreign_key "users", "regions"
 end

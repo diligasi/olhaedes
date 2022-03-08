@@ -42,5 +42,11 @@ FactoryBot.define do
     trait :with_rodenticide do
       rodenticide { true }
     end
+
+    trait :with_test_tube do
+      after(:create) do |_field_form|
+        create(:test_tube, field_form: _field_form)
+      end
+    end
   end
 end

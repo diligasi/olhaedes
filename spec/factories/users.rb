@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :user do
     association :region
 
-    name   { Faker::Name.name }
+    name   { Faker::Name.unique.name }
     cpf    { Faker::CPF.number }
     status { true }
     role   { :field }
