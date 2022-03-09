@@ -1,0 +1,40 @@
+<% content_for :title do %>
+  Recuperação de senha
+<% end %>
+
+<p class="login-box-msg">Esqueceu sua senha?<br />Insira seu e-mail abaixo para receber as intruções de recuperação</p>
+
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+  <%#= render "admin/auth/shared/error_messages", resource: resource %>
+
+  <div class="input-group mb-3">
+    <%= f.email_field :email, autofocus: true, autocomplete: 'email', class: 'form-control', placeholder: 'E-mail' %>
+    <div class="input-group-append">
+      <div class="input-group-text">
+        <span class="fas fa-envelope"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <%= f.submit 'Enviar instruções', class: 'btn btn-primary btn-block' %>
+    </div>
+  </div>
+<% end %>
+
+<br />
+
+<p class="mb-1">
+  <%= render 'admin/auth/shared/links' %>
+</p>
+
+<style>
+  .field_with_errors {
+    position: relative;
+    -ms-flex: 1 1 0%;
+    flex: 1 1 0%;
+    min-width: 0;
+    margin-bottom: 0;
+  }
+</style>

@@ -1,0 +1,34 @@
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+  <%= f.hidden_field :reset_password_token %>
+
+  <div class="input-group mb-3">
+    <%= f.password_field :password, autofocus: true, autocomplete: 'new-password', class: 'form-control', placeholder: "Nova Senha (mínimo #{@minimum_password_length} caracteres)" %>
+    <div class="input-group-append">
+      <div class="input-group-text">
+        <span class="fas fa-lock"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="input-group mb-3">
+    <%= f.password_field :password_confirmation, autofocus: true, autocomplete: 'new-password', class: 'form-control', placeholder: 'Confirmação de senha' %>
+    <div class="input-group-append">
+      <div class="input-group-text">
+        <span class="fas fa-lock"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <%= f.submit 'Atualizar senha', class: 'btn btn-primary btn-block' %>
+    </div>
+  </div>
+<% end %>
+
+<br />
+
+<p class="mb-1">
+  <%= render 'admin/auth/shared/links' %>
+</p>
