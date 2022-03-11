@@ -1,0 +1,112 @@
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <%= link_to admin_root_path, class: 'brand-link' do %>
+    <%= image_tag 'https://cdn.pixabay.com/photo/2016/06/18/14/35/mosquito-1465063_1280.png', alt: 'OlhAedes', class: 'brand-image img-circle elevation-3', style: 'opacity: .8; background: white;' %>
+    <span class="brand-text font-weight-light">OlhAedes</span>
+  <% end %>
+
+  <div class="sidebar">
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="image">
+        <%= image_tag(path_to_image('user-avatar.jpg'), alt: 'profile avatar', class: 'img-circle elevation-2') %>
+      </div>
+
+      <div class="info">
+        <%#= link_to current_admin_user.name, admin_user_path(current_admin_user) %>
+      </div>
+    </div>
+
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+<!--        <li class="nav-item">-->
+          <%# if current_admin_user.admin? %>
+            <%#= link_to admin_users_path, class: "nav-link#{ current_page?(admin_users_path) ? ' active' : '' }" do %>
+<!--              <i class="nav-icon fas fa-users"></i>-->
+<!--              <p><%#= translate 'activerecord.models.user.other' %></p>-->
+            <%# end %>
+          <%# end %>
+<!--        </li>-->
+
+<!--        <li class="nav-item">-->
+          <%# if can? :read, :dashboard %>
+            <%#= link_to admin_dashboard_path, class: "nav-link#{ current_page?(admin_dashboard_path) ? ' active' : '' }" do %>
+<!--              <i class="nav-icon fas fa-chart-pie"></i>-->
+<!--              <p>Dashboard</p>-->
+            <%# end %>
+          <%# end %>
+<!--        </li>-->
+        
+<!--        <li class="nav-item">-->
+          <%# if can? :read, Department %>
+            <%#= link_to admin_departments_path, class: "nav-link#{ current_page?(admin_departments_path) ? ' active' : '' }" do %>
+<!--              <i class="nav-icon fas fa-building"></i>-->
+<!--              <p><%#= translate 'activerecord.models.department.other' %></p>-->
+            <%# end %>
+          <%# end %>
+<!--        </li>-->
+
+<!--        <li class="nav-item">-->
+          <%# if can? :read, Region %>
+            <%#= link_to admin_regions_path, class: "nav-link#{ current_page?(admin_regions_path) ? ' active' : '' }" do %>
+<!--              <i class="nav-icon fas fa-map-marked-alt"></i>-->
+<!--              <p><%#= translate 'activerecord.models.region.other' %></p>-->
+            <%# end %>
+          <%# end %>
+<!--        </li>-->
+        
+<!--        <li class="nav-item">-->
+          <%# if can? :read, PropertyType %>
+            <%#= link_to admin_property_types_path, class: "nav-link#{ current_page?(admin_property_types_path) ? ' active' : '' }" do %>
+<!--              <i class="nav-icon fas fa-archway"></i>-->
+<!--              <p><%#= translate 'activerecord.models.property_type.other' %></p>-->
+            <%# end %>
+          <%# end %>
+<!--        </li>-->
+        
+<!--        <li class="nav-item">-->
+          <%# if can? :read, FieldForm %>
+            <%#= link_to admin_field_forms_path, class: "nav-link#{ current_page?(admin_field_forms_path) ? ' active' : '' }" do %>
+<!--              <i class="nav-icon fas fa-copy"></i>-->
+<!--              <p><%#= translate 'activerecord.models.field_form.other' %></p>-->
+            <%# end %>
+          <%# end %>
+<!--        </li>-->
+        
+<!--        <li class="nav-item">-->
+          <%# if can? :read, LarvaSpecy %>
+            <%#= link_to admin_larva_species_path, class: "nav-link#{ current_page?(admin_larva_species_path) ? ' active' : '' }" do %>
+<!--              <i class="nav-icon fas fa-biohazard"></i>-->
+<!--              <p><%#= translate 'activerecord.models.larva_specy.other' %></p>-->
+            <%# end %>
+          <%# end %>
+<!--        </li>-->
+        
+<!--        <li class="nav-item">-->
+          <%# if can? :read, ShedType %>
+            <%#= link_to admin_shed_types_path, class: "nav-link#{ current_page?(admin_shed_types_path) ? ' active' : '' }" do %>
+<!--              <i class="nav-icon fas fa-city"></i>-->
+<!--              <p><%#= translate 'activerecord.models.shed_type.other' %></p>-->
+            <%# end %>
+          <%# end %>
+<!--        </li>-->
+        
+<!--        <li class="nav-item">-->
+          <%# if can? :read, Institutional %>
+            <%#= link_to admin_institutionals_path, class: "nav-link#{ current_page?(admin_institutionals_path) ? ' active' : '' }" do %>
+<!--              <i class="nav-icon fas fa-university"></i>-->
+<!--              <p><%#= translate 'activerecord.models.institutional' %></p>-->
+            <%# end %>
+          <%# end %>
+<!--        </li>-->
+        
+        <li class="nav-item">
+          <%# if can? :read, Faq %>
+            <%= link_to admin_faqs_path, class: "nav-link#{ current_page?(admin_faqs_path) ? ' active' : '' }" do %>
+              <i class="nav-icon fas fa-info-circle"></i>
+              <p><%= translate 'activerecord.models.faq.other' %></p>
+            <% end %>
+          <%# end %>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</aside>
