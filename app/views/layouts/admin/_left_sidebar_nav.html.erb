@@ -11,20 +11,20 @@
       </div>
 
       <div class="info">
-        <%#= link_to current_admin_user.name, admin_user_path(current_admin_user) %>
+        <%= link_to current_admin_user.name, admin_user_path(current_admin_user) %>
       </div>
     </div>
 
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-<!--        <li class="nav-item">-->
-          <%# if current_admin_user.admin? %>
-            <%#= link_to admin_users_path, class: "nav-link#{ current_page?(admin_users_path) ? ' active' : '' }" do %>
-<!--              <i class="nav-icon fas fa-users"></i>-->
-<!--              <p><%#= translate 'activerecord.models.user.other' %></p>-->
-            <%# end %>
-          <%# end %>
-<!--        </li>-->
+        <li class="nav-item">
+          <% if current_admin_user.admin? %>
+            <%= link_to admin_users_path, class: "nav-link#{ current_page?(admin_users_path) ? ' active' : '' }" do %>
+              <i class="nav-icon fas fa-users"></i>
+              <p><%= translate 'activerecord.models.user.other' %></p>
+            <% end %>
+          <% end %>
+        </li>
 
 <!--        <li class="nav-item">-->
           <%# if can? :read, :dashboard %>

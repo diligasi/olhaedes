@@ -1,0 +1,2 @@
+$('select#user_region_id').remove();
+$('#user_region_label').after('<%= j select_tag(:region_id, options_from_collection_for_select(@filtered_regions, :id, :name), include_blank: 'Opcional para usuários administradores', class: 'form-control', name: 'user[region_id]', id: 'user_region_id') %>');

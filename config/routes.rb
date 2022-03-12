@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
     root to: redirect('/')
 
+    resources :users
     resources :faqs
   end
 

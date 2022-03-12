@@ -21,6 +21,7 @@ gem 'sidekiq'
 
 # Assets Gems ##################################################################
 gem 'chartkick'
+gem 'groupdate'
 gem "importmap-rails"
 gem "sprockets-rails"
 gem "stimulus-rails"

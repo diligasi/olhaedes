@@ -1,0 +1,172 @@
+pt-BR:
+  activerecord:
+    models:
+      user:
+        one: Usuário
+        other: Usuários
+      department:
+        one: Secretaria
+        other: Secretarias
+      region:
+        one: Região
+        other: Regiões
+      property_type:
+        one: Tipo de imóvel
+        other: Tipos de imóvel
+      field_form:
+        one: Ficha de campo
+        other: Fichas de campo
+      faq:
+        one: FAQ
+        other: FAQs
+      larva_specy:
+        one: Espécie da larva
+        other: Espécies de larva
+      shed_type:
+        one: Local de coleta
+        other: Locais de coleta
+      test_tube:
+        one: Tubito
+        other: Tubitos
+      larva:
+        one: Larva
+        other: Larvas
+      institutional: Sobre
+    attributes:
+      user:
+        name: Nome
+        cpf: CPF
+        email: E-mail
+        role: Tipo de usuário
+        roles:
+          admin: Administrador
+          supervisor: Supervisor
+          lab: Monitor de laboratório
+          field: Agente de campo
+        status: Status
+        region: Região
+      department:
+        name: Nome
+        description: Descrição
+      region:
+        name: Nome
+        department: Secretaria
+      property_type:
+        name: Nome
+        description: Descrição
+      field_form:
+        status: Status
+        statuses:
+          pending: Pendente
+          complete: Completa
+        street: Rua
+        number: Número
+        complement: Complemento
+        block: Quadra
+        district: Bairro
+        city: Cidade
+        state: Estado
+        country: País
+        zipcode: CEP
+        visit_status: Visita
+        visit_statuses:
+          allowed: Permitida
+          refused: Recusada
+          closed_location: Local fechado
+        visit_comment: Observação
+        larvae_found: Larvas encontradas?
+        larvicide: Larvicida
+        rodenticide: Raticida
+        property_type: Tipo de Imóvel
+        test_tubes: Tubito
+      faq:
+        question: Pergunta
+        answer: Resposta
+      larva_specy:
+        name: Nome
+        description: Descrição
+      shed_type:
+        name: Nome
+        description: Descrição
+      test_tube:
+        code: Código
+        collected_amount: Qtd. de larvas coletadas
+        comments: Observação
+      larva:
+        comments: Observação
+    errors:
+      models:
+        user:
+          attributes:
+            name:
+              blank: não pode ficar em branco.
+            cpf:
+              blank: não pode ficar em branco.
+              taken: inserido já está cadastrado no sistema para outro usuário.
+            email:
+              blank: não pode ficar em branco.
+              taken: inserido já está cadastrado no sistema para outro usuário.
+              invalid: tem que seguir o formato básico de um e-mail com @.
+            role:
+              inclusion: "tem que ser um dos seguintes valores: Administrador, Supervisor, Monitor de laboratório ou Agente de campo"
+            status:
+              inclusion: "tem que ser um dos seguintes valores: true ou false (ativo ou inativo)"
+            region:
+              blank: não pode ficar em branco
+        department:
+          attributes:
+            name:
+              blank: não pode ficar em branco.
+        region:
+          attributes:
+            name:
+              blank: não pode ficar em branco.
+            department:
+              required: não pode ficar em branco.
+        property_type:
+          attributes:
+            name:
+              blank: não pode ficar em branco.
+        field_form:
+          attributes:
+            street:
+              blank: não pode ficar em branco.
+            district:
+              blank: não pode ficar em branco.
+            city:
+              blank: não pode ficar em branco.
+            state:
+              blank: não pode ficar em branco.
+            zipcode:
+              blank: não pode ficar em branco.
+            visit_status:
+              inclusion: "tem que ser um dos seguintes valores: Permitida, Recusada, Local fechado"
+            larvae_found:
+              inclusion: "tem que ser um dos seguintes valores: true ou false (encontrado ou não encontrado)"
+            property_type:
+              required: "é obrigatório"
+            test_tubes:
+              invalid: "inválido, apenas a observação é opicional"
+        faq:
+          attributes:
+              question:
+                blank: não pode ficar em branco.
+              answer:
+                blank: não pode ficar em branco.
+        larva_specy:
+          attributes:
+            name:
+              blank: não pode ficar em branco.
+        shed_type:
+          attributes:
+            name:
+              blank: não pode ficar em branco.
+        test_tube:
+          attributes:
+            code:
+              blank: não pode ficar em branco.
+            collected_amount:
+              not_a_number: tem que ser um número.
+              greater_than: tem que ser maior que %{count}.
+            field_form:
+              required: precisa estar assossiado.

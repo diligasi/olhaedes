@@ -1,0 +1,71 @@
+<section class="content-header">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark">Detalhes do usuário</h1>
+        </div>
+        
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><%= link_to 'Home', admin_root_path %></li>
+            <li class="breadcrumb-item active">Detalhes do usuário</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-primary">
+          <div class="card-header">
+            <div class="col-sm-12">
+              <p id="notice"><%= notice %></p>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <strong>Nome</strong>
+            <p class="text-muted">
+              <%= @user.name %>
+            </p>
+
+            <strong>CPF</strong>
+            <p class="text-muted">
+              <%= cpf_formatter(@user.cpf) %>
+            </p>
+
+            <strong>E-mail</strong>
+            <p class="text-muted">
+              <%= @user.email %>
+            </p>
+
+            <strong>Status</strong>
+            <p class="text-muted">
+              <%= @user.status ? 'Usuário ativo' : 'Usuário desabilitado' %>
+            </p>
+
+            <strong>Tipo</strong>
+            <p class="text-muted">
+              <%= roles_name_for_human(@user.role) %>
+            </p>
+
+            <strong>Região (Secretaria)</strong>
+            <p class="text-muted">
+              <%= @user.region.present? ? "#{@user.region.name} (#{@user.region.department.name})" : '---' %>
+            </p>
+          </div>
+
+          <div class="card-footer">
+            <%= link_to "#{translate 'actions.back'}", admin_users_path, class: 'btn btn-secondary' %>
+            <%= link_to "#{translate 'actions.edit'}", edit_admin_user_path(@user), class: 'btn btn-primary' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
