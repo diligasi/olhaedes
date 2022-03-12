@@ -29,8 +29,8 @@
               <% end %>
             </div>
           </div>
-          
-          <div class="card-body p-0">
+
+          <div class="card-body p-0" id="users">
             <table class="table table-striped">
               <thead>
                 <tr>
@@ -66,12 +66,6 @@
           <div class="card-footer clearfix">
             <%= paginate @users %>
           </div>
-
-          <%#= line_chart User.group_by_day(:created_at).count %>
-<!--          <br />-->
-          <%#= pie_chart User.group(:region).count.transform_keys { |k| k.nil? ? 'Sem região' : k.name } %>
-<!--          <br />-->
-          <%#= geo_chart FieldForm.group(:zipcode).count %>
         </div>
       </div>
     </div>
