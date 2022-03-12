@@ -1,0 +1,31 @@
+<%= form_with(model: [:admin, faq]) do |form| %>
+  <% if faq.errors.any? %>
+    <div class="alert alert-info alert-dismissible" style="margin: 15px 15px 0 15px;">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <h5><i class="icon fas fa-info"></i> <%= pluralize(faq.errors.count, 'erro impede', plural: 'erros impedem') %> que esta FAQ seja salva:</h5>
+
+      <ul>
+        <% faq.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="card-body">
+    <div class="form-group">
+      <%= form.label :question %>
+      <%= form.text_field :question, class: 'form-control', placeholder: 'Insira a pergunta' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :answer %>
+      <%= form.text_area :answer, class: 'form-control', placeholder: 'Insira a resposta da pergunta acima' %>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <%= link_to "#{translate 'actions.back'}", admin_faqs_path, class: 'btn btn-secondary' %>
+    <%= form.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>

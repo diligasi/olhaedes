@@ -1,0 +1,36 @@
+<section class="content-header">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark">Edição de FAQ</h1>
+        </div>
+
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><%= link_to 'Home', admin_root_path %></li>
+            <li class="breadcrumb-item active">Edição de FAQ</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-primary">
+          <div class="card-header">
+            <div class="col-sm-12"></div>
+          </div>
+
+          <div class="card-body p-0">
+            <%= render "form", faq: @faq %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
