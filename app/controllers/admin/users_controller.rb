@@ -1,7 +1,8 @@
 class Admin::UsersController < Admin::AdminController
   load_and_authorize_resource
 
-  before_action :set_user, only: %i[ show edit update destroy ]
+  before_action :set_user,          only: %i[ show edit update destroy ]
+  before_action :set_password_user, only: %i[ edit_password update_password ]
 
   def index
     @users = User.order(:role, :id).page(page).per(per_page)
@@ -14,6 +15,8 @@ class Admin::UsersController < Admin::AdminController
   end
 
   def edit; end
+
+  def edit_password; end
 
   def create
     @user = User.new(user_params)
@@ -41,6 +44,19 @@ class Admin::UsersController < Admin::AdminController
     end
   end
 
+  def update_password
+    respond_to do |format|
+      if @user.update_with_password(password_params)
+        sign_in @user, :bypass => true
+        format.html { redirect_to admin_user_path(@user), notice: 'Senha atualizada com sucesso.' }
+        format.json { render :show, status: :ok, location: @user }
+      else
+        format.html { render :edit_password, status: :unprocessable_entity }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def destroy
     @user.destroy
     respond_to do |format|
@@ -55,7 +71,15 @@ class Admin::UsersController < Admin::AdminController
     @user = User.find(params[:id])
   end
 
+  def set_password_user
+    @user = current_user
+  end
+
   def user_params
     params.require(:user).permit(:name, :cpf, :email, :status, :role, :region_id)
+  end
+
+  def password_params
+    params.require(:user).permit(:password, :password_confirmation, :current_password)
   end
 end

@@ -60,6 +60,7 @@ pt-BR:
     new: Novo
     back: Voltar
     close: Fechar
+    update_password: Atualizar senha
 
   helpers:
     submit:

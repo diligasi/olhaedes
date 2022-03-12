@@ -9,7 +9,13 @@ Rails.application.routes.draw do
 
     root to: redirect('/')
 
-    resources :users
+    resources :users do
+      collection do
+        get   'edit_password'
+        patch 'update_password'
+      end
+    end
+
     resources :faqs
   end
 

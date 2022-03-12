@@ -113,6 +113,15 @@ pt-BR:
               inclusion: "tem que ser um dos seguintes valores: true ou false (ativo ou inativo)"
             region:
               blank: não pode ficar em branco
+            current_password:
+              blank: não pode ficar em branco
+              invalid: incorreta
+            password:
+              blank: não pode ficar em branco
+              too_short: tem de ter no mínimo 6 caracteres
+            password_confirmation:
+              blank: não pode ficar em branco
+              confirmation: o valor tem que ser igual o do campo senha
         department:
           attributes:
             name:
