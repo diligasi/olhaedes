@@ -53,7 +53,7 @@
                     <td><%= roles_name_for_human(admin_user.role) %></td>
                     <td><%= link_to "#{translate 'actions.show'}", admin_user_path(admin_user), class: 'btn btn-block bg-gradient-info btn-sm' %></td>
                     <td><%= link_to "#{translate 'actions.edit'}", edit_admin_user_path(admin_user), class: 'btn btn-block bg-gradient-primary btn-sm' %></td>
-                    <td><%= link_to "#{translate 'actions.destroy'}", admin_user_path(admin_user), class: 'btn btn-block bg-gradient-danger btn-sm', method: :delete, data: { confirm: "#{translate 'confirm'}" } %></td>
+                    <td><%= link_to "#{translate 'actions.destroy'}", admin_user_path(admin_user), class: 'btn btn-block bg-gradient-danger btn-sm', data: { turbo_confirm: "#{translate 'confirm'}", turbo_method: :delete } %></td>
                   </tr>
                 <% end %>
               </tbody>
