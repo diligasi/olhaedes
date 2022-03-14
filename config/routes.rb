@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     resources :departments
     resources :regions
     resources :property_types
+    resources :larva_species
     resources :faqs
   end
 

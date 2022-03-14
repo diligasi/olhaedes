@@ -19,7 +19,7 @@ pt-BR:
       faq:
         one: FAQ
         other: FAQs
-      larva_specy:
+      larva_species:
         one: Espécie da larva
         other: Espécies de larva
       shed_type:
@@ -82,7 +82,7 @@ pt-BR:
       faq:
         question: Pergunta
         answer: Resposta
-      larva_specy:
+      larva_species:
         name: Nome
         description: Descrição
       shed_type:
@@ -163,7 +163,7 @@ pt-BR:
                 blank: não pode ficar em branco
               answer:
                 blank: não pode ficar em branco
-        larva_specy:
+        larva_species:
           attributes:
             name:
               blank: não pode ficar em branco

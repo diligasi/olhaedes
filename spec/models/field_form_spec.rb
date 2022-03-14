@@ -94,7 +94,7 @@ RSpec.describe FieldForm, type: :model do
       pending 'soon...'
     end
 
-    context '.by_larva_specy' do
+    context '.by_larva_species' do
       pending 'soon...'
     end
 

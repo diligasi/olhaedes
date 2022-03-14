@@ -71,14 +71,14 @@
           <%# end %>
 <!--        </li>-->
         
-<!--        <li class="nav-item">-->
-          <%# if can? :read, LarvaSpecy %>
-            <%#= link_to admin_larva_species_path, class: "nav-link#{ current_page?(admin_larva_species_path) ? ' active' : '' }" do %>
-<!--              <i class="nav-icon fas fa-biohazard"></i>-->
-<!--              <p><%#= translate 'activerecord.models.larva_specy.other' %></p>-->
-            <%# end %>
-          <%# end %>
-<!--        </li>-->
+        <li class="nav-item">
+          <% if can? :read, LarvaSpecies %>
+            <%= link_to admin_larva_species_index_path, class: "nav-link#{ current_page?(admin_larva_species_index_path) ? ' active' : '' }" do %>
+              <i class="nav-icon fas fa-biohazard"></i>
+              <p><%= translate 'activerecord.models.larva_species.other' %></p>
+            <% end %>
+          <% end %>
+        </li>
         
 <!--        <li class="nav-item">-->
           <%# if can? :read, ShedType %>

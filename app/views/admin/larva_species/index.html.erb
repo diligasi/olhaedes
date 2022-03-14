@@ -1,5 +1,5 @@
 <% content_for :title do %>
-  Listagem de Tipos de Imóvel
+  Listagem de Espécies de Larva
 <% end %>
 
 <section class="content-header">
@@ -7,13 +7,13 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0 text-dark">Listagem de tipo de imóvel</h1>
+          <h1 class="m-0 text-dark">Listagem de espécies de larva</h1>
         </div>
         
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><%= link_to 'Home', admin_root_path %></li>
-            <li class="breadcrumb-item active">Listagem de tipo de imóvel</li>
+            <li class="breadcrumb-item active">Listagem de espécies de larva</li>
           </ol>
         </div>
       </div>
@@ -28,13 +28,13 @@
         <div class="card">
           <div class="card-header">
             <div class="col-sm-12">
-              <%= link_to new_admin_property_type_path, class: 'btn bg-gradient-primary btn-sm  float-sm-right' do %>
+              <%= link_to new_admin_larva_species_path, class: 'btn bg-gradient-primary btn-sm  float-sm-right' do %>
                 <i class="nav-icon fas fa-plus"></i>
               <% end %>
             </div>
           </div>
           
-          <div class="card-body p-0" id="property-types">
+          <div class="card-body p-0" id="larva-species">
             <table class="table table-striped">
               <thead>
                 <tr>
@@ -45,13 +45,13 @@
               </thead>
 
               <tbody>
-                <% @property_types.each do |property_type| %>
+                <% @larva_species.each do |larva_species| %>
                   <tr>
-                    <td><%= property_type.name %></td>
-                    <td><%= property_type.description.truncate(30) %></td>
-                    <td><%= link_to "#{translate 'actions.show'}", admin_property_type_path(property_type), class: 'btn btn-block bg-gradient-info btn-sm' %></td>
-                    <td><%= link_to "#{translate 'actions.edit'}", edit_admin_property_type_path(property_type), class: 'btn btn-block bg-gradient-primary btn-sm' %></td>
-                    <td><%= link_to "#{translate 'actions.destroy'}", admin_property_type_path(property_type), class: 'btn btn-block bg-gradient-danger btn-sm', data: { turbo_confirm: "#{translate 'confirm'}", turbo_method: :delete } %></td>
+                    <td><%= larva_species.name %></td>
+                    <td><%= larva_species.description.truncate(30) %></td>
+                    <td><%= link_to "#{translate 'actions.show'}", admin_larva_species_path(larva_species), class: 'btn btn-block bg-gradient-info btn-sm' %></td>
+                    <td><%= link_to "#{translate 'actions.edit'}", edit_admin_larva_species_path(larva_species), class: 'btn btn-block bg-gradient-primary btn-sm' %></td>
+                    <td><%= link_to "#{translate 'actions.destroy'}", admin_larva_species_path(larva_species), class: 'btn btn-block bg-gradient-danger btn-sm', data: { turbo_confirm: "#{translate 'confirm'}", turbo_method: :delete } %></td>
                   </tr>
                 <% end %>
               </tbody>
@@ -62,7 +62,7 @@
           <br />
 
           <div class="card-footer clearfix">
-            <%= paginate @property_types %>
+            <%= paginate @larva_species %>
           </div>
         </div>
       </div>
