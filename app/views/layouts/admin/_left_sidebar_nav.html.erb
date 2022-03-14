@@ -53,14 +53,14 @@
           <% end %>
         </li>
         
-<!--        <li class="nav-item">-->
-          <%# if can? :read, PropertyType %>
-            <%#= link_to admin_property_types_path, class: "nav-link#{ current_page?(admin_property_types_path) ? ' active' : '' }" do %>
-<!--              <i class="nav-icon fas fa-archway"></i>-->
-<!--              <p><%#= translate 'activerecord.models.property_type.other' %></p>-->
-            <%# end %>
-          <%# end %>
-<!--        </li>-->
+        <li class="nav-item">
+          <% if can? :read, PropertyType %>
+            <%= link_to admin_property_types_path, class: "nav-link#{ current_page?(admin_property_types_path) ? ' active' : '' }" do %>
+              <i class="nav-icon fas fa-archway"></i>
+              <p><%= translate 'activerecord.models.property_type.other' %></p>
+            <% end %>
+          <% end %>
+        </li>
         
 <!--        <li class="nav-item">-->
           <%# if can? :read, FieldForm %>

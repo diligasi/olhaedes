@@ -1,0 +1,43 @@
+<% content_for :title do %>
+  Detalhes da Tipo de Imóvel
+<% end %>
+
+<section class="content-header">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark">Detalhes do tipo de imóvel</h1>
+        </div>
+        
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><%= link_to 'Home', admin_root_path %></li>
+            <li class="breadcrumb-item active">Detalhes do tipo de imóvel</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-primary">
+          <div class="card-header">
+            <div class="col-sm-12"></div>
+          </div>
+
+          <%= render @property_type %>
+
+          <div class="card-footer">
+            <%= link_to "#{translate 'actions.back'}", admin_property_types_path, class: 'btn btn-secondary' %>
+            <%= link_to "#{translate 'actions.edit'}", edit_admin_property_type_path(@property_type), class: 'btn btn-primary' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
