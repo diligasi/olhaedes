@@ -43,5 +43,21 @@
         <%= yield %>
       </div>
     </div>
+
+    <% if flash.any? %>
+      <script type='text/javascript'>
+        <% flash.each do |key, value| %>
+          <% type = key.to_s.gsub('alert', 'danger').gsub('notice', 'success') %>
+
+          $(document).Toasts('create', {
+              title: 'Status da ação',
+              body: '<%= value %>',
+              class: '<%= "bg-#{type}" %>',
+              autohide: true,
+              delay: 5500
+          })
+        <% end %>
+      </script>
+    <% end %>
   </body>
 </html>

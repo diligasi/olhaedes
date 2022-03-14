@@ -13,3 +13,10 @@
  * require_tree .
  * require_self
  */
+
+.toasts-top-right {
+    position: absolute;
+    right: 5px !important;
+    top: 5px !important;;
+    z-index: 1040;
+}
