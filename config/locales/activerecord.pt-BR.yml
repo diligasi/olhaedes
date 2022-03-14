@@ -99,14 +99,14 @@ pt-BR:
         user:
           attributes:
             name:
-              blank: não pode ficar em branco.
+              blank: não pode ficar em branco
             cpf:
-              blank: não pode ficar em branco.
-              taken: inserido já está cadastrado no sistema para outro usuário.
+              blank: não pode ficar em branco
+              taken: inserido já está cadastrado no sistema para outro usuário
             email:
-              blank: não pode ficar em branco.
-              taken: inserido já está cadastrado no sistema para outro usuário.
-              invalid: tem que seguir o formato básico de um e-mail com @.
+              blank: não pode ficar em branco
+              taken: inserido já está cadastrado no sistema para outro usuário
+              invalid: tem que seguir o formato básico de um e-mail com @
             role:
               inclusion: "tem que ser um dos seguintes valores: Administrador, Supervisor, Monitor de laboratório ou Agente de campo"
             status:
@@ -125,29 +125,30 @@ pt-BR:
         department:
           attributes:
             name:
-              blank: não pode ficar em branco.
+              blank: não pode ficar em branco
         region:
           attributes:
             name:
-              blank: não pode ficar em branco.
+              blank: não pode ficar em branco
+              taken: já está sendo utilizado
             department:
-              required: não pode ficar em branco.
+              required: não pode ficar em branco
         property_type:
           attributes:
             name:
-              blank: não pode ficar em branco.
+              blank: não pode ficar em branco
         field_form:
           attributes:
             street:
-              blank: não pode ficar em branco.
+              blank: não pode ficar em branco
             district:
-              blank: não pode ficar em branco.
+              blank: não pode ficar em branco
             city:
-              blank: não pode ficar em branco.
+              blank: não pode ficar em branco
             state:
-              blank: não pode ficar em branco.
+              blank: não pode ficar em branco
             zipcode:
-              blank: não pode ficar em branco.
+              blank: não pode ficar em branco
             visit_status:
               inclusion: "tem que ser um dos seguintes valores: Permitida, Recusada, Local fechado"
             larvae_found:
@@ -159,23 +160,23 @@ pt-BR:
         faq:
           attributes:
               question:
-                blank: não pode ficar em branco.
+                blank: não pode ficar em branco
               answer:
-                blank: não pode ficar em branco.
+                blank: não pode ficar em branco
         larva_specy:
           attributes:
             name:
-              blank: não pode ficar em branco.
+              blank: não pode ficar em branco
         shed_type:
           attributes:
             name:
-              blank: não pode ficar em branco.
+              blank: não pode ficar em branco
         test_tube:
           attributes:
             code:
-              blank: não pode ficar em branco.
+              blank: não pode ficar em branco
             collected_amount:
-              not_a_number: tem que ser um número.
-              greater_than: tem que ser maior que %{count}.
+              not_a_number: tem que ser um número
+              greater_than: tem que ser maior que %{count}
             field_form:
-              required: precisa estar assossiado.
+              required: precisa estar assossiado

@@ -1,0 +1,31 @@
+<%= form_for([:admin, region]) do |form| %>
+  <% if region.errors.any? %>
+    <div class="alert alert-info alert-dismissible" style="margin: 15px 15px 0 15px;">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <h5><i class="icon fas fa-info"></i> <%= pluralize(region.errors.count, 'erro impede', plural: 'erros impedem') %> que esta região seja salva:</h5>
+      
+      <ul>
+        <% region.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="card-body">
+    <div class="form-group">
+      <%= form.label :name %>
+      <%= form.text_field :name, class: 'form-control', placeholder: 'Nome da região' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :department %>
+      <%= form.select :department_id, options_for_select(Department.all.map { |ls| [ls.name, ls.id] }, form.object.department_id), { include_blank: 'Selecionar secretaria de origem' }, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <%= link_to "#{translate 'actions.back'}", admin_regions_path, class: 'btn btn-secondary' %>
+    <%= form.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>

@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     end
 
     resources :departments
+    resources :regions
     resources :faqs
   end
 

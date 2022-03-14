@@ -1,0 +1,73 @@
+<% content_for :title do %>
+  Listagem de Regiões
+<% end %>
+
+<section class="content-header">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark">Listagem de regiões</h1>
+        </div>
+        
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><%= link_to 'Home', admin_root_path %></li>
+            <li class="breadcrumb-item active">Listagem de regiões</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="col-sm-12">
+              <%= link_to new_admin_region_path, class: 'btn bg-gradient-primary btn-sm  float-sm-right' do %>
+                <i class="nav-icon fas fa-plus"></i>
+              <% end %>
+            </div>
+          </div>
+          
+          <div class="card-body p-0" id="regions">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Secretaria</th>
+                  <th>Nº de Usuários Ativos</th>
+                  <th colspan="3"></th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <% @regions.each do |region| %>
+                  <tr>
+                    <td><%= region.name %></td>
+                    <td><%= region.department.name %></td>
+                    <td><%= region.number_of_active_users %></td>
+                    <td><%= link_to "#{translate 'actions.show'}", admin_region_path(region), class: 'btn btn-block bg-gradient-info btn-sm' %></td>
+                    <td><%= link_to "#{translate 'actions.edit'}", edit_admin_region_path(region), class: 'btn btn-block bg-gradient-primary btn-sm' %></td>
+                    <td><%= link_to "#{translate 'actions.destroy'}", admin_region_path(region), class: 'btn btn-block bg-gradient-danger btn-sm', data: { turbo_confirm: "#{translate 'confirm'}", turbo_method: :delete } %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+
+          </div>
+
+          <br />
+
+          <div class="card-footer clearfix">
+            <%= paginate @regions %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

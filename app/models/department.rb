@@ -1,5 +1,5 @@
 class Department < ApplicationRecord
-  has_many :regions
+  has_many :regions, dependent: :destroy
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 

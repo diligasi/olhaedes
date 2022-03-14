@@ -1,5 +1,5 @@
 class Region < ApplicationRecord
-  belongs_to :department, dependent: :destroy
+  belongs_to :department
 
   has_many :users
 
