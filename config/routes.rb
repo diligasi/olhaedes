@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     resources :property_types
     resources :larva_species
     resources :shed_types
+    resources :institutional
     resources :faqs
   end
 

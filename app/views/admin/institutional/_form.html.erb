@@ -1,0 +1,31 @@
+<%= form_for([:admin, institutional]) do |form| %>
+  <% if institutional.errors.any? %>
+    <div class="alert alert-info alert-dismissible" style="margin: 15px 15px 0 15px;">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <h5><i class="icon fas fa-info"></i> <%= pluralize(institutional.errors.count, 'erro impede', plural: 'erros impedem') %> que este contato seja salvo:</h5>
+      
+      <ul>
+        <% institutional.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="card-body">
+    <div class="form-group">
+      <%= form.label :description %>
+      <%= form.text_area :description, class: 'form-control', placeholder: 'Insira uma breve descrição sobre o projeto' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :phone_numbers %>
+      <%= form.text_area :phone_numbers, class: 'form-control', placeholder: 'Insira o número para contato (separe por vírgulas se houver mais de um)' %>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <%= link_to "#{translate 'actions.back'}", admin_institutional_index_path, class: 'btn btn-secondary' %>
+    <%= form.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>

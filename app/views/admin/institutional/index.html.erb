@@ -1,0 +1,58 @@
+<% content_for :title do %>
+  Informações de Contato
+<% end %>
+
+<section class="content-header">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark">Informações de contato</h1>
+        </div>
+        
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><%= link_to 'Home', admin_root_path %></li>
+            <li class="breadcrumb-item active">Informações de contato</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="col-sm-12">
+              <% if @institutional.blank? %>
+                <%= link_to new_admin_institutional_path, class: 'btn bg-gradient-primary btn-sm  float-sm-right' do %>
+                  <i class="nav-icon fas fa-plus"></i>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+
+          <section class="content px-2" style="padding: 20px !important;">
+            <% if @institutional.blank? %>
+              <p class="col text-center">Informações de contato não cadastradas.</p>
+            <% else %>
+              <strong>Sobre o projeto</strong>
+              <p class="text-muted" style="text-align: justify; text-justify: inter-word;"><%= @institutional.description %></p>
+              <strong>Contato</strong>
+              <p class="text-muted"><%= @institutional.phone_numbers %></p>
+            <% end %>
+          </section>
+
+           <div class="card-footer">
+            <%= link_to("#{translate 'actions.edit'}", edit_admin_institutional_path(@institutional), class: 'btn btn-primary') if @institutional.present? && can?(:edit, @institutional) %>
+            <%= link_to("#{translate 'actions.destroy'}", admin_institutional_path(@institutional), class: 'btn bg-gradient-danger', data: { turbo_confirm: "#{translate 'confirm'}", turbo_method: :delete }) if @institutional.present? && can?(:destroy, @institutional) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
