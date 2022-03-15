@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     resources :regions
     resources :property_types
     resources :larva_species
+    resources :shed_types
     resources :faqs
   end
 

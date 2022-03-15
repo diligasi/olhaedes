@@ -80,14 +80,14 @@
           <% end %>
         </li>
         
-<!--        <li class="nav-item">-->
-          <%# if can? :read, ShedType %>
-            <%#= link_to admin_shed_types_path, class: "nav-link#{ current_page?(admin_shed_types_path) ? ' active' : '' }" do %>
-<!--              <i class="nav-icon fas fa-city"></i>-->
-<!--              <p><%#= translate 'activerecord.models.shed_type.other' %></p>-->
-            <%# end %>
-          <%# end %>
-<!--        </li>-->
+        <li class="nav-item">
+          <% if can? :read, ShedType %>
+            <%= link_to admin_shed_types_path, class: "nav-link#{ current_page?(admin_shed_types_path) ? ' active' : '' }" do %>
+              <i class="nav-icon fas fa-city"></i>
+              <p><%= translate 'activerecord.models.shed_type.other' %></p>
+            <% end %>
+          <% end %>
+        </li>
         
 <!--        <li class="nav-item">-->
           <%# if can? :read, Institutional %>
