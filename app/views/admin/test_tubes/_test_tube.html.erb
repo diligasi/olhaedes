@@ -1,0 +1,36 @@
+<div class="card-body" id="<%= dom_id test_tube %>">
+  <div class="row">
+    <div class="col-sm-5">
+      <strong>Local onde foram encontradas larvas:</strong>
+      <%= test_tube.shed_type&.name || '---' %>
+    </div>
+
+    <div class="col-sm-3">
+      <strong>Qtd. de larvas coletadas:</strong>
+      <%= test_tube.collected_amount %>
+    </div>
+
+    <div class="col-sm-4">
+      <strong>OBS.:</strong>
+      <%= test_tube.comments %>
+    </div>
+  </div>
+
+  <br />
+
+  <div class="row" style="border-bottom: 1px solid #999d99;padding: 0 0 5px 0; margin-bottom: 10px;">
+    <div class="col-sm-6">
+      <h5><strong>Análise dos espécimes</strong></h5>
+    </div>
+
+    <div class="col-sm-6">
+      <% if can?(:update, test_tube&.field_form) && test_tube&.analysis&.size < test_tube&.collected_amount %>
+        <%= link_to '#', data: { toggle: 'modal', target: '#modal-add-species', test_tube: test_tube.id }, class: 'btn bg-gradient-primary btn-sm float-sm-right' do %>
+          <i class="nav-icon fas fa-plus"></i>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <%= render 'admin/larvae/list', analysis: test_tube&.analysis, test_tube: test_tube %>
+</div>

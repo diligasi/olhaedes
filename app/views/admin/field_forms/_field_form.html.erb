@@ -1,0 +1,68 @@
+<div class="card-body" id="<%= dom_id field_form %>">
+  <div class="row">
+    <div class="col-sm-12">
+      <strong>Status de preenchimento da ficha:</strong>
+      <%= field_form_list_status_component(field_form.status) %>
+    </div>
+  </div>
+
+  <br />
+
+  <div class="row">
+    <div class="col-sm-5">
+      <strong>Endereço</strong>
+      <p class="text-muted">
+        <%= field_form_list_address(field_form) %>
+      </p>
+    </div>
+
+    <div class="col-sm-3">
+      <strong>Tipo de imóvel</strong>
+      <p class="text-muted">
+        <%= field_form.property_type.name %>
+      </p>
+    </div>
+
+    <div class="col-sm-4">
+      <strong>Sobre a visita</strong>
+      <p class="text-muted">
+        <%= t("activerecord.attributes.field_form.visit_statuses.#{field_form.visit_status}") %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-5">
+      <strong>Foram encontradas larvas?</strong>
+      <p class="text-muted">
+        <%= field_form_simple_status_component(field_form.larvae_found) %>
+      </p>
+    </div>
+
+    <div class="col-sm-3">
+      <strong>Uso de larvicida?</strong>
+      <p class="text-muted">
+        <%= field_form_simple_status_component(field_form.larvicide) %>
+      </p>
+    </div>
+
+    <div class="col-sm-4">
+      <strong>Uso de raticida?</strong>
+      <p class="text-muted">
+        <%= field_form_simple_status_component(field_form.rodenticide) %>
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <strong>Observações</strong>
+      <p class="text-muted">
+        <%= field_form.visit_comment || 'Sem observações.' %>
+      </p>
+    </div>
+  </div>
+
+  <br />
+
+  <%= render 'admin/test_tubes/list', test_tubes: field_form.test_tubes %>
+</div>

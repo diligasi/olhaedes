@@ -1,0 +1,117 @@
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+<%= form_tag(admin_field_form_search_filters_path, method: :get, name: 'field-form-form') do %>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <%= label_tag('Agente', nil, class: 'control-label') %><br />
+        <%= text_field_tag(:by_agent_name, params[:by_agent_name], placeholder: 'Nome do agente', class: 'form-control') %>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <%= label_tag('Endereço', nil, class: 'control-label') %><br />
+        <%= text_field_tag(:by_address, params[:by_address], placeholder: 'Rua, número, complemento, quadra, bairro ou CEP', class: 'form-control') %>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <%= label_tag('Criado em', nil, class: 'control-label') %><br />
+        <%= text_field_tag(:by_date_range, params[:by_date_range], placeholder: 'Intervalo de criação', class: 'form-control') %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-group">
+        <%= label_tag('Status da ficha', nil, class: 'control-label') %><br />
+        <%= select_tag(:by_field_form_status, options_for_select(field_form_statuses_name_for_selection, params[:by_field_form_status]), prompt: 'Selecione o status', class: 'form-control') %>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="form-group">
+        <%= label_tag('Tipo de imóvel', nil, class: 'control-label') %><br />
+        <%= select_tag(:by_property_type, options_for_select(PropertyType.pluck(:name, :id), params[:by_property_type]), prompt: 'Selecione o imóvel', class: 'form-control') %>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="form-group">
+        <%= label_tag('Local coleta', nil, class: 'control-label') %><br />
+        <%= select_tag(:by_shed_type, options_for_select(ShedType.pluck(:name, :id), params[:by_shed_type]), prompt: 'Local encontrada as larvas', class: 'form-control') %>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="form-group">
+        <%= label_tag('Espécie', nil, class: 'control-label') %><br />
+        <%= select_tag(:by_larva_specy, options_for_select(LarvaSpecies.pluck(:name, :id), params[:by_larva_specy]), prompt: 'Espécie coletada', class: 'form-control') %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-group">
+        <%= label_tag('Larvas encontradas', nil, class: 'control-label') %><br />
+        <%= number_field_tag(:by_larvae_amount, params[:by_larvae_amount], placeholder: 'Qts. de larvas encontradas', min: 1, step: 1, pattern: '^[0-9]', class: 'form-control') %>
+      </div>
+    </div>
+
+    <div class="col-md-7">
+      <div class="form-group">
+        <label for="User">&nbsp;</label><br />
+      </div>
+    </div>
+
+    <div class="col-md-1">
+      <div class="form-group">
+        <label for="User">&nbsp;</label><br />
+        <%= submit_tag('Limpar', name: 'reset', id: 'reset', type: 'reset', class: 'btn btn-secondary') %>
+      </div>
+    </div>
+
+    <div class="col-md-1">
+      <div class="form-group">
+        <label for="User">&nbsp;</label><br />
+        <%= submit_tag('Filtrar', class: 'btn btn-primary') %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+<script>
+    $(function() {
+        moment.locale('pt-br');
+
+        $('input[name="by_date_range"]').daterangepicker({
+            autoUpdateInput: false,
+            locale: {
+                "format": "DD/MM/YYYY",
+                "applyLabel": "Aplicar",
+                "cancelLabel": "Limpar intervalo"
+            }
+        });
+
+        $('input[name="by_date_range"]').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+        });
+
+        $('input[name="by_date_range"]').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
+        });
+
+        $("input[name='reset']").click(function(event) {
+            event.preventDefault();
+            $(':input').not(':button, :submit, :reset, :hidden, :checkbox, :radio').val('');
+            $(':checkbox, :radio').prop('checked', false);
+        });
+    });
+</script>

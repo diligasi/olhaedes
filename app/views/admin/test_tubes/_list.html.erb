@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-sm-12">
+    <h4><strong>Tubitos Associados</strong></h4>
+    <hr style="margin: -5px 0 10px 0;">
+  </div>
+</div>
+
+<% if test_tubes.empty? %>
+  <div class="row">
+    <div class="mx-auto" style="width: 250px;">
+      <p>Não há nenhum tubito associado.</p>
+    </div>
+  </div>
+<% else %>
+  <% test_tubes.each do |test_tube| %>
+    <div id="accordion">
+      <div class="card card-info">
+        <div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse_<%= dom_id test_tube %>" style="cursor: pointer;">
+          <h4 class="card-title" style="width: 100%;">
+            <strong>Tubito Nº</strong> <i><%= test_tube.code %></i>
+          </h4>
+        </div>
+
+        <div id="collapse_<%= dom_id test_tube %>" class="panel-collapse collapse in">
+          <%= render test_tube %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>

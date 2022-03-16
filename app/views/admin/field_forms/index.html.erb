@@ -1,0 +1,92 @@
+<% content_for :title do %>
+  Listagem de Fichas de Campo
+<% end %>
+
+<section class="content-header">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark">Listagem de fichas de campo</h1>
+        </div>
+        
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><%= link_to 'Home', admin_root_path %></li>
+            <li class="breadcrumb-item active">Listagem de fichas de campo</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="card card-default collapsed-card">
+      <div class="card-header">
+        <h3 class="card-title">Filtros</h3>
+
+        <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i></button>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <%= render 'admin/field_forms/filter_form' %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="col-sm-12"></div>
+          </div>
+          
+          <div class="card-body p-0" id="field-forms">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Agente</th>
+                  <th>Endereço</th>
+                  <th>Presença de larva</th>
+                  <th>Status da ficha</th>
+                  <th colspan="2"></th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <% if @field_forms.empty?  %>
+                  <tr>
+                    <td colspan="6" style="text-align: center;">
+                        Sem registros para exibição. 😅
+                    </td>
+                  </tr>
+                <% else  %>
+                  <% @field_forms.each do |field_form| %>
+                    <tr>
+                      <td><%= field_form.user.name %></td>
+                      <td><%= field_form_list_address(field_form) %></td>
+                      <td><%= field_form_list_larvae_status_component(field_form.larvae_found) %></td>
+                      <td><%= field_form_list_status_component(field_form.complete?) %></td>
+                      <td><%= link_to "#{translate 'actions.show'}", admin_field_form_path(field_form), class: 'btn btn-block bg-gradient-info btn-sm' %></td>
+                      <td></td>
+                    </tr>
+                  <% end %>
+                <% end  %>
+              </tbody>
+            </table>
+
+          </div>
+
+          <br />
+
+          <div class="card-footer clearfix">
+            <%= paginate @field_forms %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

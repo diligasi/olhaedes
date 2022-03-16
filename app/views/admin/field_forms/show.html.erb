@@ -1,0 +1,106 @@
+<% content_for :title do %>
+  Detalhes da Ficha de Campo
+<% end %>
+
+<section class="content-header">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark">Detalhes da ficha</h1>
+        </div>
+        
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><%= link_to 'Home', admin_root_path %></li>
+            <li class="breadcrumb-item active">Detalhes da ficha</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Ficha de campo</h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+            </div>
+          </div>
+
+          <%= render @field_form %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modal-add-species">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Dados do espécime</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <% if @field_form.larvae_found %>
+          <%= form_for([:admin, Larva.new]) do |form| %>
+            <%= form.hidden_field :test_tube_id %>
+
+            <div class="modal-body">
+              <div class="card-body">
+                <div class="form-group">
+                  <%= form.label :larva_species %>
+                  <%= form.select :larva_species_id, options_for_select(LarvaSpecies.all.map { |ls| [ls.name, ls.id] }, form.object.larva_species), {}, class: 'form-control' %>
+                </div>
+
+                <div class="form-group">
+                  <%= form.label :comments %>
+                  <%= form.text_area :comments, class: 'form-control', placeholder: 'Insira um breve comentário' %>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal-footer justify-content-between">
+              <%= link_to "#{translate 'actions.close'}", '#', class: 'btn btn-secondary', data: { dismiss: 'modal' } %>
+              <%= form.submit class: 'btn btn-primary' %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+<style>
+  #accordion .card-header .card-title:after {
+    font-family: 'FontAwesome';  
+    content: "\f068";
+    float: right; 
+  }
+  #accordion .card-header.collapsed .card-title:after {
+    /* symbol for "collapsed" panels */
+    content: "\f067"; 
+  }
+  .card-outline .card-header h3.card-title:after {
+    content: "" !important;
+  }
+</style>
+
+<script>
+    $(function() {
+        $('a[data-test-tube]').on('click', function(e) {
+            let value = $(e.target).data('test-tube');
+            $('#larva_test_tube_id').val(value);
+        });
+    });
+</script>

@@ -4,7 +4,7 @@ class TestTube < ApplicationRecord
 
   has_many :larvae
 
-  alias_attribute :analyzes, :larvae
+  alias_attribute :analysis, :larvae
 
   validates :code,             presence: true, uniqueness: { case_sensitive: false }
   validates :collected_amount, numericality: { greater_than: 0 }
