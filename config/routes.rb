@@ -32,6 +32,8 @@ Rails.application.routes.draw do
     resources :shed_types
     resources :institutional
     resources :faqs
+
+    get 'dashboard'  => 'dashboard#index'
   end
 
   devise_for :users

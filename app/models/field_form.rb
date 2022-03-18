@@ -23,6 +23,20 @@ class FieldForm < ApplicationRecord
   validates :visit_status, inclusion: { in: visit_statuses.keys }
   validates :larvae_found, inclusion: { in: [true, false] }
 
+  scope :completed, -> {
+    where(status: 'complete')
+  }
+
+  scope :based_on_role_for, lambda { |user|
+    if user.admin?
+      left_outer_joins(:test_tubes, user: [region: [:department]])
+        .where(nil)
+    else
+      left_outer_joins(:test_tubes, user: [region: [:department]])
+        .where({ departments: { id: user.region&.department&.id } })
+    end
+  }
+
   scope :by_agent_name, lambda { |name|
     joins(:user)
       .where('lower(users.name) like ?', "%#{name.downcase}%")
@@ -67,9 +81,9 @@ class FieldForm < ApplicationRecord
       .where(test_tubes: { collected_amount: amount })
   }
 
-  scope :by_dashboard_range, lambda { |condition|
+  scope :by_dashboard_range, lambda { |date_range|
     left_outer_joins(:test_tubes, user: [region: [:department]])
-      .where(condition)
+      .where({ field_forms: { created_at: date_range } })
   }
 
   # Ensures that only the zipcode numbers

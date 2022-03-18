@@ -1,0 +1,292 @@
+<% content_for :title do %>
+  Gráficos e Relatórios
+<% end %>
+
+<section class="content-header">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-9">
+          <div style="display: table-row;">
+            <div style="display: table-cell; width: 41%;">
+              <h1 class="m-0 text-dark" style="float: left">Dashboard</h1>
+              <p style="line-height: 34px !important; display: inline;">&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;Periodo analisado:</p>
+            </div>
+
+            <div style="display: table-cell; width: 270px;">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="far fa-clock"></i></span>
+                  <input type="text" class="form-control float-right" id="dashboard-range-picker">
+                </div>
+              </div>
+            </div>
+
+            <div style="display: table-cell">
+              <div class="btn-group" style="vertical-align: baseline !important;">
+                <%#= link_to admin_csv_export_path, method: 'get', remote: true, class: 'btn btn-info btn-block btn-flat export-btn', style: 'border-radius: 5px;' do %>
+<!--                  <i class="fa fa-file-excel"></i>&nbsp;&nbsp;&nbsp;Baixar relatório-->
+                <%# end %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><%= link_to 'Home', admin_root_path %></li>
+            <li class="breadcrumb-item active">Dashboard</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content">
+  <div class="container-fluid">
+    <!-- Cards de resumo das fichas -->
+    <div class="row">
+      <div class="col-lg-3 col-6">
+        <div class="small-box bg-info">
+          <div class="inner">
+            <h3 id="total-visits"><%= @total_visits %></h3>
+
+            <p style="font-weight: bold;">└> Nº de fichas preenchidas</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-home"></i>
+          </div>
+          <p id="analyzed-field-forms-percentage" class="small-box-footer">
+            <%= @completed_visits.positive? || @completed_visits.positive? ? "#{(@completed_visits * 100) / @total_visits}% já analisadas" : 'Nenhuma ficha analisada' %>
+          </p>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-6">
+        <div class="small-box bg-success">
+          <div class="inner">
+            <h3 id="clean-places"><%= @clean %></h3>
+
+            <p style="font-weight: bold;">
+              └> Sem contaminação
+            </p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-thumbsup"></i>
+          </div>
+          <p id="clean-places-percentage" class="small-box-footer">
+            <%= @clean.positive? || @total_visits.positive? ? "#{(@clean * 100) / @total_visits}% dos locais visitados" : 'Dados insuficientes' %>
+          </p>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-6">
+        <div class="small-box bg-warning" style="color: #fff !important;">
+          <div class="inner">
+            <h3 id="closed-or-refused"><%= @closed_or_refused %></h3>
+
+            <p style="font-weight: bold;">
+              └> Locais fechados / negados
+            </p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-thumbsdown"></i>
+          </div>
+          <p id="closed-or-refused-percentage" class="small-box-footer" style="color: #fff !important;">
+            <%= @closed_or_refused.positive? ? "#{(@closed_or_refused * 100) / @total_visits}% dos locais visitados" : 'Dados insuficientes' %>
+          </p>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-6">
+        <div class="small-box bg-danger">
+          <div class="inner">
+            <h3 id="with-larvae"><%= @with_larvae %></h3>
+
+            <p style="font-weight: bold;">
+              └> Com contaminação
+            </p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-nuclear"></i>
+          </div>
+          <p id="with-larvae-percentage" class="small-box-footer">
+            <%= @with_larvae.positive? ? "#{(@with_larvae * 100) / @total_visits}% dos locais visitados" : 'Dados insuficientes' %>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <section class="col-lg-7 connectedSortable">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">
+              <i class="fas fa-chart-bar mr-1"></i>
+              Distribuição das amostras coletadas
+            </h3>
+
+            <div class="card-tools">
+              <ul class="nav nav-pills ml-auto">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#contaminated-places" data-toggle="tab">Locais de coleta</a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="#number-of-larvae-per-region" data-toggle="tab">Larvas por região</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="tab-content p-0">
+              <div class="chart tab-pane active" id="contaminated-places" style="position: relative; height: 300px;">
+                <%= column_chart @contaminated_places, id: 'contaminated-places-chart', empty: 'Dados insuficientes' %>
+              </div>
+
+              <div class="chart tab-pane" id="number-of-larvae-per-region" style="position: relative; height: 300px;">
+                <%= bar_chart @number_of_larvae_per_region, id: 'number-of-larvae-per-region-chart', empty: 'Dados insuficientes' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="col-lg-5 connectedSortable">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">
+              <i class="fas fa-chart-pie mr-1"></i>
+              Visitas e coleta
+            </h3>
+            <div class="card-tools">
+              <ul class="nav nav-pills ml-auto">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#property-types" data-toggle="tab">Imóveis visitados</a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="#number-of-larvae-per-shed-type" data-toggle="tab">Larvas por imóvel</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="tab-content p-0">
+              <div class="chart tab-pane active" id="property-types" style="position: relative; height: 300px;">
+                <%= pie_chart @property_types, id: 'property-types-chart', empty: 'Dados insuficientes' %>
+              </div>
+
+              <div class="chart tab-pane" id="number-of-larvae-per-shed-type" style="position: relative; height: 300px;">
+                <%= pie_chart @number_of_larvae_per_shed_type, id: 'number-of-larvae-per-shed-type-chart', empty: 'Dados insuficientes' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="row">
+      <section class="col-lg-12 connectedSortable">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">
+              <i class="fas fa-chart-bar mr-1"></i>
+              Distribuição das espécies analisadas por região
+            </h3>
+          </div>
+
+          <div class="card-body">
+            <div>
+              <div class="chart tab-pane" id="species-by-regionx" style="position: relative; height: 300px;">
+                <%= column_chart @species_per_region, id: 'species-by-region-chart', empty: 'Dados insuficientes', xtitle: 'OBS.: Baseado nas amostras já analisadas em laboratório' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</section>
+
+<script>
+    $(document).on('turbolinks:load', function() {
+        return $('body').on('click', '.export-btn', function(e) {
+            e.preventDefault();
+
+            let url, uuid;
+
+            uuid = generateUUID();
+            url = decodeURI(e.target.href + '?export_id=' + uuid);
+
+            // Disable Export btn
+            $('.export-btn').html("<i class='fa fa-file-excel'></i>&nbsp;&nbsp;&nbsp;Baixando...");
+            $('.export-btn').addClass('disabled');
+
+            return window.ExportChannel.Subscribe(uuid, function() {
+                $.get(url);
+            });
+        });
+    });
+
+    function generateUUID() {
+        let d;
+
+        d = new Date().getTime();
+
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            let r;
+
+            r = (d + Math.random() * 16) % 16 | 0;
+            d = Math.floor(d / 16);
+
+            return (c === 'x' ? r : r & 0x3 | 0x8).toString(16);
+        });
+    };
+
+    $(function() {
+        $('#dashboard-range-picker').daterangepicker({
+            "locale": {
+                "format": "DD/MM/YYYY",
+                "separator": " - ",
+                "applyLabel": "Confirmar",
+                "cancelLabel": "Cancelar",
+                "fromLabel": "A partir de",
+                "toLabel": "Até",
+                "customRangeLabel": "Custom",
+                "weekLabel": "S",
+                "daysOfWeek": [
+                    "Dom",
+                    "Seg",
+                    "Ter",
+                    "Qua",
+                    "Qui",
+                    "Sex",
+                    "Sab"
+                ],
+                "monthNames": [
+                    "Janeiro",
+                    "Fevereiro",
+                    "Março",
+                    "Abril",
+                    "Maio",
+                    "Junho",
+                    "Julho",
+                    "Agosto",
+                    "Setembro",
+                    "Outubro",
+                    "Novembro",
+                    "Dezembro"
+                ],
+                "firstDay": 1
+            },
+            "startDate": "<%= DateTime.now.beginning_of_month.strftime('%d/%m/%Y') %>",
+            "endDate": "<%= DateTime.now.end_of_month.strftime('%d/%m/%Y') %>"
+        }, function(start, end, label) {
+            $.get(`/admin/filter_dashboard_by_date_range?start=${start.format('YYYY-MM-DD')}&end=${end.format('YYYY-MM-DD')}`)
+        });
+    });
+</script>
