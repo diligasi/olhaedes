@@ -84,34 +84,36 @@
   </div>
 <% end %>
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<% content_for :current_page_js do %>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
-<script>
-    $(function() {
-        moment.locale('pt-br');
+  <script>
+      $(function() {
+          moment.locale('pt-br');
 
-        $('input[name="by_date_range"]').daterangepicker({
-            autoUpdateInput: false,
-            locale: {
-                "format": "DD/MM/YYYY",
-                "applyLabel": "Aplicar",
-                "cancelLabel": "Limpar intervalo"
-            }
-        });
+          $('input[name="by_date_range"]').daterangepicker({
+              autoUpdateInput: false,
+              locale: {
+                  "format": "DD/MM/YYYY",
+                  "applyLabel": "Aplicar",
+                  "cancelLabel": "Limpar intervalo"
+              }
+          });
 
-        $('input[name="by_date_range"]').on('apply.daterangepicker', function(ev, picker) {
-            $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
-        });
+          $('input[name="by_date_range"]').on('apply.daterangepicker', function(ev, picker) {
+              $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+          });
 
-        $('input[name="by_date_range"]').on('cancel.daterangepicker', function(ev, picker) {
-            $(this).val('');
-        });
+          $('input[name="by_date_range"]').on('cancel.daterangepicker', function(ev, picker) {
+              $(this).val('');
+          });
 
-        $("input[name='reset']").click(function(event) {
-            event.preventDefault();
-            $(':input').not(':button, :submit, :reset, :hidden, :checkbox, :radio').val('');
-            $(':checkbox, :radio').prop('checked', false);
-        });
-    });
-</script>
+          $("input[name='reset']").click(function(event) {
+              event.preventDefault();
+              $(':input').not(':button, :submit, :reset, :hidden, :checkbox, :radio').val('');
+              $(':checkbox, :radio').prop('checked', false);
+          });
+      });
+  </script>
+<% end %>

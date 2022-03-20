@@ -96,11 +96,13 @@
   }
 </style>
 
-<script>
-    $(function() {
-        $('a[data-test-tube]').on('click', function(e) {
-            let value = $(e.target).data('test-tube');
-            $('#larva_test_tube_id').val(value);
-        });
-    });
-</script>
+<% content_for :current_page_js do %>
+  <script>
+      $(function() {
+          $('a[data-test-tube]').on('click', function(e) {
+              let value = $(e.target).data('test-tube');
+              $('#larva_test_tube_id').val(value);
+          });
+      });
+  </script>
+<% end %>

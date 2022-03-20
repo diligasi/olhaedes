@@ -212,81 +212,83 @@
   </div>
 </section>
 
-<script>
-    $(document).on('turbolinks:load', function() {
-        return $('body').on('click', '.export-btn', function(e) {
-            e.preventDefault();
+<% content_for :current_page_js do %>
+  <script>
+      $(document).on('turbolinks:load', function() {
+          return $('body').on('click', '.export-btn', function(e) {
+              e.preventDefault();
 
-            let url, uuid;
+              let url, uuid;
 
-            uuid = generateUUID();
-            url = decodeURI(e.target.href + '?export_id=' + uuid);
+              uuid = generateUUID();
+              url = decodeURI(e.target.href + '?export_id=' + uuid);
 
-            // Disable Export btn
-            $('.export-btn').html("<i class='fa fa-file-excel'></i>&nbsp;&nbsp;&nbsp;Baixando...");
-            $('.export-btn').addClass('disabled');
+              // Disable Export btn
+              $('.export-btn').html("<i class='fa fa-file-excel'></i>&nbsp;&nbsp;&nbsp;Baixando...");
+              $('.export-btn').addClass('disabled');
 
-            return window.ExportChannel.Subscribe(uuid, function() {
-                $.get(url);
-            });
-        });
-    });
+              return window.ExportChannel.Subscribe(uuid, function() {
+                  $.get(url);
+              });
+          });
+      });
 
-    function generateUUID() {
-        let d;
+      function generateUUID() {
+          let d;
 
-        d = new Date().getTime();
+          d = new Date().getTime();
 
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            let r;
+          return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+              let r;
 
-            r = (d + Math.random() * 16) % 16 | 0;
-            d = Math.floor(d / 16);
+              r = (d + Math.random() * 16) % 16 | 0;
+              d = Math.floor(d / 16);
 
-            return (c === 'x' ? r : r & 0x3 | 0x8).toString(16);
-        });
-    };
+              return (c === 'x' ? r : r & 0x3 | 0x8).toString(16);
+          });
+      };
 
-    $(function() {
-        $('#dashboard-range-picker').daterangepicker({
-            "locale": {
-                "format": "DD/MM/YYYY",
-                "separator": " - ",
-                "applyLabel": "Confirmar",
-                "cancelLabel": "Cancelar",
-                "fromLabel": "A partir de",
-                "toLabel": "Até",
-                "customRangeLabel": "Custom",
-                "weekLabel": "S",
-                "daysOfWeek": [
-                    "Dom",
-                    "Seg",
-                    "Ter",
-                    "Qua",
-                    "Qui",
-                    "Sex",
-                    "Sab"
-                ],
-                "monthNames": [
-                    "Janeiro",
-                    "Fevereiro",
-                    "Março",
-                    "Abril",
-                    "Maio",
-                    "Junho",
-                    "Julho",
-                    "Agosto",
-                    "Setembro",
-                    "Outubro",
-                    "Novembro",
-                    "Dezembro"
-                ],
-                "firstDay": 1
-            },
-            "startDate": "<%= DateTime.now.beginning_of_month.strftime('%d/%m/%Y') %>",
-            "endDate": "<%= DateTime.now.end_of_month.strftime('%d/%m/%Y') %>"
-        }, function(start, end, label) {
-            $.get(`/admin/filter_dashboard_by_date_range?start=${start.format('YYYY-MM-DD')}&end=${end.format('YYYY-MM-DD')}`)
-        });
-    });
-</script>
+      $(function() {
+          $('#dashboard-range-picker').daterangepicker({
+              "locale": {
+                  "format": "DD/MM/YYYY",
+                  "separator": " - ",
+                  "applyLabel": "Confirmar",
+                  "cancelLabel": "Cancelar",
+                  "fromLabel": "A partir de",
+                  "toLabel": "Até",
+                  "customRangeLabel": "Custom",
+                  "weekLabel": "S",
+                  "daysOfWeek": [
+                      "Dom",
+                      "Seg",
+                      "Ter",
+                      "Qua",
+                      "Qui",
+                      "Sex",
+                      "Sab"
+                  ],
+                  "monthNames": [
+                      "Janeiro",
+                      "Fevereiro",
+                      "Março",
+                      "Abril",
+                      "Maio",
+                      "Junho",
+                      "Julho",
+                      "Agosto",
+                      "Setembro",
+                      "Outubro",
+                      "Novembro",
+                      "Dezembro"
+                  ],
+                  "firstDay": 1
+              },
+              "startDate": "<%= DateTime.now.beginning_of_month.strftime('%d/%m/%Y') %>",
+              "endDate": "<%= DateTime.now.end_of_month.strftime('%d/%m/%Y') %>"
+          }, function(start, end, label) {
+              $.get(`/admin/filter_dashboard_by_date_range?start=${start.format('YYYY-MM-DD')}&end=${end.format('YYYY-MM-DD')}`)
+          });
+      });
+  </script>
+<% end %>

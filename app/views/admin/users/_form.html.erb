@@ -57,17 +57,18 @@
   </div>
 <% end %>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw==" crossorigin="anonymous"></script>
-<script>
-  $(document).ready(function() {
-    $('#user_cpf').mask('000.000.000-00', {reverse: true});
+<% content_for :current_page_js do %>
+  <script>
+      $(function() {
+          $('#user_cpf').mask('000.000.000-00', {reverse: true});
 
-    $(document).on('change','select#user_department_id',function(){
-      $.ajax({
-        url:  '/admin/filter_regions_by_department',
-        type: 'GET',
-        data: { selected_department: $('select#user_department_id').val() }
+          $(document).on('change','select#user_department_id',function(){
+              $.ajax({
+                  url:  '/admin/filter_regions_by_department',
+                  type: 'GET',
+                  data: { selected_department: $('select#user_department_id').val() }
+              });
+          });
       });
-    });
-  });
-</script>
+  </script>
+<% end %>
