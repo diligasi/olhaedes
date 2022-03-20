@@ -47,3 +47,7 @@ group :test do
   gem 'rspec-rails'
   gem 'shoulda-matchers'
 end
+
+group :production, :staging do
+  gem 'bugsnag'
+end
