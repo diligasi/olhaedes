@@ -1,0 +1,18 @@
+$('#total-visits').html('<%= @total_visits %>');
+$('#analyzed-field-forms-percentage').html('<%= @completed_visits.positive? ? "#{(@completed_visits * 100) / @total_visits}% já analisadas" : 'Nenhuma ficha analisada' %>');
+
+$('#clean-places').html('<%= @clean %>');
+$('#clean-places-percentage').html('<%= @clean.positive? || @total_visits.positive? ? "#{(@clean * 100) / @total_visits}% dos locais visitados" : 'Dados insuficientes' %>');
+
+$('#closed-or-refused').html('<%= @closed_or_refused %>');
+$('#closed-or-refused-percentage').html('<%= @closed_or_refused.positive? || @total_visits.positive? ? "#{(@closed_or_refused * 100) / @total_visits}% dos locais visitados" : 'Dados insuficientes' %>');
+
+$('#with-larvae').html('<%= @with_larvae %>');
+$('#with-larvae-percentage').html('<%= @with_larvae.positive? || @total_visits.positive? ? "#{(@with_larvae * 100) / @total_visits}% dos locais visitados" : 'Dados insuficientes' %>');
+
+Chartkick.charts['contaminated-places-chart'].updateData(JSON.parse('<%= j raw(@contaminated_places.to_json) %>'));
+Chartkick.charts['number-of-larvae-per-region-chart'].updateData(JSON.parse('<%= j raw(@number_of_larvae_per_region.to_json) %>'));
+Chartkick.charts['property-types-chart'].updateData(JSON.parse('<%= j raw(@property_types.to_json) %>'));
+Chartkick.charts['number-of-larvae-per-shed-type-chart'].updateData(JSON.parse('<%= j raw(@number_of_larvae_per_shed_type.to_json) %>'));
+
+Chartkick.charts['species-by-region-chart'].updateData(JSON.parse('<%= j raw(@species_per_region.to_json) %>'));

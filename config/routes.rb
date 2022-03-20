@@ -34,6 +34,8 @@ Rails.application.routes.draw do
     resources :faqs
 
     get 'dashboard'  => 'dashboard#index'
+
+    get 'filter_dashboard_by_date_range' => 'dashboard#filter_dashboard_by_date_range'
   end
 
   devise_for :users

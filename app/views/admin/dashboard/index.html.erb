@@ -58,7 +58,7 @@
             <i class="ion ion-home"></i>
           </div>
           <p id="analyzed-field-forms-percentage" class="small-box-footer">
-            <%= @completed_visits.positive? || @completed_visits.positive? ? "#{(@completed_visits * 100) / @total_visits}% já analisadas" : 'Nenhuma ficha analisada' %>
+            <%= @completed_visits.positive? ? "#{(@completed_visits * 100) / @total_visits}% já analisadas" : 'Nenhuma ficha analisada' %>
           </p>
         </div>
       </div>

@@ -24,7 +24,7 @@ class FieldForm < ApplicationRecord
   validates :larvae_found, inclusion: { in: [true, false] }
 
   scope :completed, -> {
-    where(status: 'complete')
+    where(status: 'complete').distinct
   }
 
   scope :based_on_role_for, lambda { |user|
