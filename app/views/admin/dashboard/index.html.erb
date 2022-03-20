@@ -24,9 +24,9 @@
 
             <div style="display: table-cell">
               <div class="btn-group" style="vertical-align: baseline !important;">
-                <%#= link_to admin_csv_export_path, method: 'get', remote: true, class: 'btn btn-info btn-block btn-flat export-btn', style: 'border-radius: 5px;' do %>
-<!--                  <i class="fa fa-file-excel"></i>&nbsp;&nbsp;&nbsp;Baixar relatório-->
-                <%# end %>
+                <%= link_to admin_csv_export_path, method: 'get', remote: true, class: 'btn btn-info btn-block btn-flat export-btn', style: 'border-radius: 5px;' do %>
+                  <i class="fa fa-file-excel"></i>&nbsp;&nbsp;&nbsp;Baixar relatório
+                <% end %>
               </div>
             </div>
           </div>
@@ -214,14 +214,18 @@
 
 <% content_for :current_page_js do %>
   <script>
-      $(document).on('turbolinks:load', function() {
+      $(function() {
           return $('body').on('click', '.export-btn', function(e) {
               e.preventDefault();
 
               let url, uuid;
 
+              let startDate = $('#dashboard-range-picker').data('daterangepicker').startDate.format('YYYY-MM-DD');
+              let endDate   = $('#dashboard-range-picker').data('daterangepicker').endDate.format('YYYY-MM-DD');
+
               uuid = generateUUID();
               url = decodeURI(e.target.href + '?export_id=' + uuid);
+              url  = decodeURI(`${e.target.href}?export_id=${uuid}&start=${startDate}&end=${endDate}`);
 
               // Disable Export btn
               $('.export-btn').html("<i class='fa fa-file-excel'></i>&nbsp;&nbsp;&nbsp;Baixando...");

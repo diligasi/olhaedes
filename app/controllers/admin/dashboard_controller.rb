@@ -8,7 +8,10 @@ class Admin::DashboardController < Admin::AdminController
   def filter_dashboard_by_date_range; end
 
   def export
-    ExportJob.perform_later(params[:export_id])
+    ExportJob.perform_later(export_id: params[:export_id],
+                            start_date: params[:start],
+                            end_date: params[:end],
+                            user_id: current_user.id)
 
     head :accepted
   end
