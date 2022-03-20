@@ -36,6 +36,7 @@ Rails.application.routes.draw do
     get 'dashboard'  => 'dashboard#index'
 
     get 'filter_dashboard_by_date_range' => 'dashboard#filter_dashboard_by_date_range'
+    get 'filter_regions_by_department'   => 'users#filter_regions_by_department'
   end
 
   devise_for :users
