@@ -63,7 +63,15 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "olhaedes_production"
 
   config.action_mailer.perform_caching = false
-  config.action_mailer.delivery_method = :cloudmailin
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    user_name: ENV['EMAIL_USER_NAME'],
+    password: ENV['EMAIL_PASSWORD'],
+    address: ENV['EMAIL_ADDRESS'],
+    domain: ENV['EMAIL_DOMAIN'],
+    port: ENV['EMAIL_PORT'],
+    authentication: :cram_md5
+  }
   config.action_mailer.default_url_options = { host: 'olhaedes.herokuapp.com' }
 
   # Ignore bad email addresses and do not raise email delivery errors.
