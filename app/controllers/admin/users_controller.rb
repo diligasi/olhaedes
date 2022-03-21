@@ -20,9 +20,11 @@ class Admin::UsersController < Admin::AdminController
 
   def create
     @user = User.new(user_params)
+    @user.password = SecureRandom.urlsafe_base64(10, false)
 
     respond_to do |format|
       if @user.save
+        @user.send_reset_password_instructions
         format.html { redirect_to admin_user_path(@user), notice: 'Usuário criado com sucesso.' }
         format.json { render :show, status: :created, location: @user }
       else

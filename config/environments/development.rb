@@ -40,6 +40,15 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = false
 
   config.action_mailer.perform_caching = false
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    user_name: ENV['EMAIL_USER_NAME'],
+    password: ENV['EMAIL_PASSWORD'],
+    address: ENV['EMAIL_ADDRESS'],
+    domain: ENV['EMAIL_DOMAIN'],
+    port: ENV['EMAIL_PORT'],
+    authentication: :cram_md5
+  }
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
