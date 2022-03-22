@@ -1,0 +1,43 @@
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <%= link_to app_root_path, class: 'brand-link' do %>
+    <%= image_tag 'https://cdn.pixabay.com/photo/2016/06/18/14/35/mosquito-1465063_1280.png', alt: 'OlhAedes', class: 'brand-image img-circle elevation-3', style: 'opacity: .8; background: white;' %>
+    <span class="brand-text font-weight-light">OlhAedes</span>
+  <% end %>
+
+  <div class="sidebar">
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="image">
+        <%= image_tag(path_to_image('user-avatar.jpg'), alt: 'profile avatar', class: 'img-circle elevation-2') %>
+      </div>
+
+      <div class="info">
+        <%= link_to current_user.name, user_path(current_user) %>
+      </div>
+    </div>
+
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+<!--        <li class="nav-item">-->
+          <%#= link_to field_forms_path, class: 'nav-link' do %>
+<!--            <i class="nav-icon fas fa-copy"></i>-->
+<!--            <p><%#= translate 'activerecord.models.field_form.other' %></p>-->
+          <%# end %>
+<!--        </li>-->
+        
+<!--        <li class="nav-item">-->
+          <%#= link_to institutionals_path, class: 'nav-link' do %>
+<!--            <i class="nav-icon fas fa-university"></i>-->
+<!--            <p><%#= translate 'activerecord.models.institutional' %></p>-->
+          <%# end %>
+<!--        </li>-->
+        
+<!--        <li class="nav-item">-->
+          <%#= link_to faqs_path, class: 'nav-link' do %>
+<!--            <i class="nav-icon fas fa-comments"></i>-->
+<!--            <p><%#= translate 'activerecord.models.faq.other' %></p>-->
+          <%# end %>
+<!--        </li>-->
+      </ul>
+    </nav>
+  </div>
+</aside>

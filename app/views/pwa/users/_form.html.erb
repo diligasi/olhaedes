@@ -1,0 +1,66 @@
+<%= form_for([user]) do |form| %>
+  <% if user.errors.any? %>
+    <div class="alert alert-info alert-dismissible" style="margin: 15px 15px 0 15px;">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <h5><i class="icon fas fa-info"></i> <%= pluralize(user.errors.count, 'erro impede', plural: 'erros impedem') %> que este usuário seja salvo:</h5>
+      
+      <ul>
+        <% user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="card-body">
+    <div class="form-group">
+      <%= form.label :name %>
+      <%= form.text_field :name, class: 'form-control', placeholder: 'Nome do usuário' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :cpf %>
+      <%= form.text_field :cpf, class: 'form-control', placeholder: 'CPF do usuário', disabled: true %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :email %>
+      <%= form.text_field :email, class: 'form-control', placeholder: 'E-mail do usuário' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :role, 'Tipo de conta' %>
+      <%= form.select :role, options_for_select(roles_name_for_selection, form.object.role), {}, class: 'form-control', disabled: true %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :department, 'Secretaria' %>
+      <%= select_tag 'Secretaria', options_from_collection_for_select(Department.select(:id, :name), 'id', 'name', form.object.region&.department&.id), { prompt: 'Opcional para usuários administradores', class: 'form-control', disabled: true } %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :region, 'Região', id: 'user_region_label' %>
+      <%= form.select :region_id, options_for_select(Region.where(department_id: form.object.region&.department&.id).map { |ls| [ls.name, ls.id] }, form.object.region_id), { include_blank: 'Primeiro selecione a secretaria desejada' }, class: 'form-control', disabled: true %>
+    </div>
+
+    <div class="form-group">
+      <div class="custom-control custom-switch">
+        <%= form.check_box :status, class: 'custom-control-input', id: 'customSwitch1', disabled: true %>
+        <%= form.label 'Ativar usuário?', class: 'custom-control-label', for: 'customSwitch1' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <%= link_to "#{translate 'actions.back'}", :back, class: 'btn btn-secondary' %>
+    <%= form.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>
+
+<% content_for :current_page_js do %>
+  <script>
+      $(function() {
+          $('#user_cpf').mask('000.000.000-00', {reverse: true});
+      });
+  </script>
+<% end %>

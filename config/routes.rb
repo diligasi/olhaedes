@@ -45,5 +45,7 @@ Rails.application.routes.draw do
       sessions: 'pwa/auth/sessions',
       passwords: 'pwa/auth/passwords'
     }
+
+    resources :users, except: %i[index new create destroy]
   end
 end

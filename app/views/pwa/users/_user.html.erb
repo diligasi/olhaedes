@@ -1,0 +1,31 @@
+<div class="card-body" id="<%= dom_id user %>">
+  <strong>Nome</strong>
+  <p class="text-muted">
+    <%= user.name %>
+  </p>
+
+  <strong>CPF</strong>
+  <p class="text-muted">
+    <%= cpf_formatter(user.cpf) %>
+  </p>
+
+  <strong>E-mail</strong>
+  <p class="text-muted">
+    <%= user.email %>
+  </p>
+
+  <strong>Status</strong>
+  <p class="text-muted">
+    <%= user.status ? 'Usuário ativo' : 'Usuário desabilitado' %>
+  </p>
+
+  <strong>Tipo</strong>
+  <p class="text-muted">
+    <%= roles_name_for_human(user.role) %>
+  </p>
+
+  <strong>Região (Secretaria)</strong>
+  <p class="text-muted">
+    <%= user.region.present? ? "#{user.region.name} (#{user.region.department.name})" : '---' %>
+  </p>
+</div>
