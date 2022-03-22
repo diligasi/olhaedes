@@ -40,5 +40,10 @@ Rails.application.routes.draw do
     get 'filter_regions_by_department'   => 'users#filter_regions_by_department'
   end
 
-  devise_for :users
+  scope module: 'pwa', path: 'app' do
+    devise_for :users, path: '', controllers: {
+      sessions: 'pwa/auth/sessions',
+      passwords: 'pwa/auth/passwords'
+    }
+  end
 end

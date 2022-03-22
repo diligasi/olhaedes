@@ -7,8 +7,7 @@ class HomeController < ApplicationController
       # redirect_to controller: 'pwa/field_forms', action: 'index'
       render plain: 'pwa/field_forms'
     else
-      # redirect_to controller: 'pwa/auth/sessions', action: 'new'
-      render plain: 'pwa/auth/sessions'
+      redirect_to controller: 'pwa/auth/sessions', action: 'new'
     end
   end
 
