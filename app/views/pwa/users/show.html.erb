@@ -27,6 +27,7 @@
 
           <div class="card-footer">
             <%= link_to "#{translate 'actions.back'}", :back, class: 'btn btn-secondary' %>
+            <%= link_to "#{translate 'actions.update_password'}", edit_password_users_path, class: 'btn btn-warning' if current_user.id == @user.id %>
             <%= link_to "#{translate 'actions.edit'}", edit_user_path(@user), class: 'btn btn-primary' %>
           </div>
         </div>

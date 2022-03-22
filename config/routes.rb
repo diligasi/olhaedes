@@ -48,7 +48,12 @@ Rails.application.routes.draw do
 
     root 'faqs#index', as: 'app_root'
 
-    resources :users, except: %i[index new create destroy]
+    resources :users, except: %i[index new create destroy] do
+      collection do
+        get   'edit_password'
+        patch 'update_password'
+      end
+    end
 
     resources :institutional, only: %i[index]
     resources :faqs,          only: %i[index]
