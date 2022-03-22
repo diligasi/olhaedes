@@ -46,6 +46,10 @@ Rails.application.routes.draw do
       passwords: 'pwa/auth/passwords'
     }
 
+    root 'faqs#index', as: 'app_root'
+
     resources :users, except: %i[index new create destroy]
+
+    resources :faqs, only: %i[index]
   end
 end

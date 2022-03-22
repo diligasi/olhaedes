@@ -1,5 +1,5 @@
 <% content_for :title do %>
-  Detalhes do <%= @user.name %>
+  Perguntas Frequentes
 <% end %>
 
 <section class="content-header">
@@ -7,7 +7,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0 text-dark">Detalhes do usuário</h1>
+          <h1 class="m-0 text-dark">FAQ - Perguntas Frequentes</h1>
         </div>
       </div>
     </div>
@@ -23,11 +23,17 @@
             <div class="col-sm-12"></div>
           </div>
 
-          <%= render @user %>
-
-          <div class="card-footer">
-            <%= link_to "#{translate 'actions.back'}", :back, class: 'btn btn-secondary' %>
-            <%= link_to "#{translate 'actions.edit'}", edit_user_path(@user), class: 'btn btn-primary' %>
+          <div class="card-body">
+            <% if @faqs.blank? %>
+              <p class="col text-center">Não existem perguntas e respostas cadastradas.</p>
+            <% else %>
+              <dl>
+                <% @faqs.each.with_index do |faq, idx| %>
+                  <dt><%= "#{idx + 1}. #{faq.question}" %></dt>
+                  <dd>&emsp;<%= faq.answer %></dd>
+                <% end %>
+              </dl>
+            <% end %>
           </div>
         </div>
       </div>
