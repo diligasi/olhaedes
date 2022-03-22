@@ -50,6 +50,7 @@ Rails.application.routes.draw do
 
     resources :users, except: %i[index new create destroy]
 
-    resources :faqs, only: %i[index]
+    resources :institutional, only: %i[index]
+    resources :faqs,          only: %i[index]
   end
 end

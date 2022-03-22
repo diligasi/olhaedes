@@ -24,12 +24,12 @@
           <%# end %>
 <!--        </li>-->
         
-<!--        <li class="nav-item">-->
-          <%#= link_to institutionals_path, class: 'nav-link' do %>
-<!--            <i class="nav-icon fas fa-university"></i>-->
-<!--            <p><%#= translate 'activerecord.models.institutional' %></p>-->
-          <%# end %>
-<!--        </li>-->
+        <li class="nav-item">
+          <%= link_to institutional_index_path, class: 'nav-link' do %>
+            <i class="nav-icon fas fa-university"></i>
+            <p><%= translate 'activerecord.models.institutional' %></p>
+          <% end %>
+        </li>
         
         <li class="nav-item">
           <%= link_to faqs_path, class: 'nav-link' do %>
