@@ -30,7 +30,7 @@ Rails.application.routes.draw do
 
     resources :larva_species
     resources :shed_types
-    resources :institutional
+    resources :institutional, except: %i[show]
     resources :faqs
 
     get 'dashboard'  => 'dashboard#index'

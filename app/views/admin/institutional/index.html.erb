@@ -43,7 +43,11 @@
               <strong>Sobre o projeto</strong>
               <p class="text-muted" style="text-align: justify; text-justify: inter-word;"><%= @institutional.description %></p>
               <strong>Contato</strong>
-              <p class="text-muted"><%= @institutional.phone_numbers %></p>
+              <dl>
+                <% @institutional.phone_numbers.split(',').each do |number| %>
+                  <dd>&nbsp;&nbsp;<%= "- #{number}" %></dd>
+                <% end %>
+              </dl>
             <% end %>
           </section>
 

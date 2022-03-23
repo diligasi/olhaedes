@@ -14,13 +14,13 @@
 
   <div class="card-body">
     <div class="form-group">
-      <%= form.label :description %>
-      <%= form.text_area :description, class: 'form-control', placeholder: 'Insira uma breve descrição sobre o projeto' %>
+      <%= form.label :phone_numbers, 'Telefones de contato' %>
+      <div id="phone-numbers" class="form-control textarea"></div>
     </div>
 
     <div class="form-group">
-      <%= form.label :phone_numbers %>
-      <%= form.text_area :phone_numbers, class: 'form-control', placeholder: 'Insira o número para contato (separe por vírgulas se houver mais de um)' %>
+      <%= form.label :description, 'Sobre o projeto' %>
+      <%= form.text_area :description, class: 'form-control', placeholder: 'Insira uma breve descrição sobre o projeto', style: 'min-height: 200px;' %>
     </div>
   </div>
 
@@ -28,4 +28,117 @@
     <%= link_to "#{translate 'actions.back'}", admin_institutional_index_path, class: 'btn btn-secondary' %>
     <%= form.submit class: 'btn btn-primary' %>
   </div>
+<% end %>
+
+<style>
+  .textarea {
+      width: 100%;
+      height: 62px;
+      padding: 8px;
+      color: #939ba2;
+      position: relative;
+  }
+  .taggle_list {
+      padding: 0;
+      margin: 0;
+      width: 100%;
+  }
+  .taggle_input {
+      border: none;
+      outline: none;
+      font-size: 16px;
+      font-weight: 300;
+  }
+  .taggle_list li {
+      display: inline;
+      vertical-align: baseline;
+      white-space: nowrap;
+      font-weight: 500;
+      margin-bottom: 5px;
+  }
+  .taggle_list .taggle {
+      margin-right: 8px;
+      background: #007bff;
+      padding: 5px 10px;
+      border-radius: 3px;
+      position: relative;
+      cursor: pointer;
+      transition: all .3s;
+      -webkit-animation-duration: 1s;
+      animation-duration: 1s;
+      -webkit-animation-fill-mode: both;
+      animation-fill-mode: both;
+      color: #ffffff;
+  }
+  .taggle_list .taggle_hot {
+      background: #cac8c4;
+  }
+  .taggle_list .taggle .close {
+      font-size: 1.1rem;
+      position: absolute;
+      top: 10px;
+      right: 3px;
+      text-decoration: none;
+      padding: 0;
+      line-height: 0.5;
+      color: #ccc;
+      color: rgba(0, 0, 0, 0.2);
+      padding-bottom: 4px;
+      display: inline-block;
+      opacity: 0;
+      pointer-events: none;
+      border: 0;
+      background: none;
+      cursor: pointer;
+  }
+  .taggle_list .taggle:hover {
+      padding: 5px 15px 5px 5px;
+      background: #6ba8e9;
+      transition: all .3s;
+  }
+  .taggle_list .taggle:hover > .close {
+      opacity: 1;
+      pointer-events: auto;
+  }
+  .taggle_list .taggle .close:hover {
+      color: #990033;
+  }
+  .taggle_placeholder {
+      position: absolute;
+      transition: opacity, .25s;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+  }
+  .taggle_input {
+      padding: 8px;
+      padding-left: 0;
+      background: none;
+      max-width: 100%;
+  }
+  .taggle_sizer {
+      padding: 0;
+      margin: 0;
+      position: absolute;
+      top: -500px;
+      z-index: -1;
+      visibility: hidden;
+  }
+</style>
+
+<% content_for :current_page_js do %>
+  <script>
+    $(function(){
+        var phone_numbers = new Taggle('phone-numbers', {
+            placeholder: 'Insira o número para contato (separe por vírgulas se houver mais de um)',
+            allowDuplicates: false,
+            hiddenInputName: 'institutional[phone_numbers][]'
+        });
+
+        <% institutional.phone_numbers.split(',').each do |number| %>
+          phone_numbers.add('<%= number %>');
+        <% end %>
+    });
+  </script>
 <% end %>

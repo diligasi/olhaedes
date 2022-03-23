@@ -1,13 +1,13 @@
 class Admin::InstitutionalController < Admin::AdminController
   load_and_authorize_resource
 
-  before_action :set_institutional, only: %i[ show edit update destroy ]
+  before_action :set_institutional, only: %i[ edit update destroy ]
 
   def index
     @institutional = Institutional.first
   end
 
-  def show; end
+  # def show; end
 
   def new
     @institutional = Institutional.new
@@ -16,11 +16,11 @@ class Admin::InstitutionalController < Admin::AdminController
   def edit; end
 
   def create
-    @institutional = Institutional.new(institutional_params)
+    @institutional = Institutional.new(processed_institutional_params)
 
     respond_to do |format|
       if @institutional.save
-        format.html { redirect_to admin_institutional_path(@institutional), notice: 'Informações adicionadas com sucesso.' }
+        format.html { redirect_to admin_institutional_index_path, notice: 'Informações adicionadas com sucesso.' }
         format.json { render :show, status: :created, location: @institutional }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -31,8 +31,8 @@ class Admin::InstitutionalController < Admin::AdminController
 
   def update
     respond_to do |format|
-      if @institutional.update(institutional_params)
-        format.html { redirect_to admin_institutional_path(@institutional), notice: 'Informações atualizadas com sucesso.' }
+      if @institutional.update(processed_institutional_params)
+        format.html { redirect_to admin_institutional_index_path, notice: 'Informações atualizadas com sucesso.' }
         format.json { render :show, status: :ok, location: @institutional }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -56,6 +56,13 @@ class Admin::InstitutionalController < Admin::AdminController
   end
 
   def institutional_params
-    params.require(:institutional).permit(:description, :phone_numbers)
+    params.require(:institutional).permit(:description, phone_numbers: [])
+  end
+
+  def processed_institutional_params
+    hsh = institutional_params.to_hash
+    hsh['phone_numbers'] = institutional_params['phone_numbers'].join(',')
+
+    hsh
   end
 end

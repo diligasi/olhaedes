@@ -12,7 +12,7 @@
     <strong>Sobre o projeto</strong>
     <p class="text-muted" style="text-align: justify; text-justify: inter-word;"><%= @institutional.description %></p>
     <strong>Contato</strong>
-    <p class="text-muted"><%= @institutional.phone_numbers %></p>
+    <p class="text-muted"><%= @institutional.phone_numbers.gsub(',', ', ') %></p>
   <% end %>
 
  <hr style="margin-top: 50px;" />
