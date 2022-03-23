@@ -46,7 +46,7 @@ Rails.application.routes.draw do
       passwords: 'pwa/auth/passwords'
     }
 
-    root 'faqs#index', as: 'app_root'
+    root 'field_forms#index', as: 'app_root'
 
     resources :users, except: %i[index new create destroy] do
       collection do
@@ -54,6 +54,8 @@ Rails.application.routes.draw do
         patch 'update_password'
       end
     end
+
+    resources :field_forms, except: %i[delete]
 
     resources :institutional, only: %i[index]
     resources :faqs,          only: %i[index]

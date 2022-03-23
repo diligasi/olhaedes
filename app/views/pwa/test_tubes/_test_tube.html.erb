@@ -1,0 +1,24 @@
+<%= form_for([test_tube], url: '#', id: 'test-tube-form') do |test_tube_form| %>
+  <%= test_tube_form.hidden_field :code, id: 'test-tube-code' %>
+
+  <div class="card-body">
+    <div class="form-group">
+      <%= test_tube_form.label :shed_type_id, 'Onde foram encontradas larvas?' %>
+      <%= test_tube_form.select :shed_type_id, options_for_select(ShedType.order(:name).map { |ls| [ls.name, ls.id] }, test_tube_form.object.shed_type_id), { include_blank: 'Selecione o Local' }, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= test_tube_form.label :collected_amount %>
+      <%= test_tube_form.number_field :collected_amount, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= test_tube_form.label :"comments" %>
+      <%= test_tube_form.text_area :"comments", class: 'form-control', placeholder: 'Descreva qualquer coisa que julgar relevante' %>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <%= link_to 'Adicionar', '#', class: 'btn btn-primary', id: 'add-test-tube-form-btn' %>
+  </div>
+<% end %>

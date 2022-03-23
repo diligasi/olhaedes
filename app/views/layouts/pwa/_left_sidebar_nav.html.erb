@@ -17,12 +17,12 @@
 
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-<!--        <li class="nav-item">-->
-          <%#= link_to field_forms_path, class: 'nav-link' do %>
-<!--            <i class="nav-icon fas fa-copy"></i>-->
-<!--            <p><%#= translate 'activerecord.models.field_form.other' %></p>-->
-          <%# end %>
-<!--        </li>-->
+        <li class="nav-item">
+          <%= link_to field_forms_path, class: 'nav-link' do %>
+            <i class="nav-icon fas fa-copy"></i>
+            <p><%= translate 'activerecord.models.field_form.other' %></p>
+          <% end %>
+        </li>
         
         <li class="nav-item">
           <%= link_to institutional_index_path, class: 'nav-link' do %>

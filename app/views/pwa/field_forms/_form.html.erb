@@ -1,0 +1,375 @@
+<%= form_for([field_form]) do |form| %>
+  <%= form.hidden_field :user_id, value: current_user.id %>
+  <%= form.hidden_field :test_tubes, id: 'field-form-test-tubes', value: field_form.test_tubes.to_json %>
+  <%= form.hidden_field :status, id: 'field-form-status' %>
+
+  <% if field_form.errors.any? %>
+    <div class="alert alert-info alert-dismissible" style="margin: 15px 15px 0 15px;">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <h5><i class="icon fas fa-info"></i> <%= pluralize(field_form.errors.count, 'erro impede', plural: 'erros impedem') %> que esta fichas de campo seja salva:</h5>
+
+      <ul>
+        <% field_form.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="card-body">
+    <div class="form-group">
+      <%= form.label :zipcode %>
+      <%= form.telephone_field :zipcode, class: 'form-control', maxlength: 8 %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :street %>
+      <%= form.text_field :street, class: 'form-control', disabled: true %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :district %>
+      <%= form.text_field :district, class: 'form-control', disabled: true %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :city %>
+      <%= form.text_field :city, class: 'form-control', disabled: true %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :state %>
+      <%= form.text_field :state, class: 'form-control', disabled: true %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :number %>
+      <%= form.text_field :number, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :complement %>
+      <%= form.text_field :complement, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :block %>
+      <%= form.text_field :block, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :property_type_id, 'Tipo de Imóvel' %>
+      <%= form.select :property_type_id, options_for_select(PropertyType.order(:name).map { |ls| [ls.name, ls.id] }, form.object.property_type_id), { include_blank: 'Selecione o tipo' }, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :visit_status, 'Sobre a visita' %>
+
+      <div class="custom-control custom-radio">
+        <%= form.radio_button :visit_status, :allowed, id: 'alowwedVisit', class: 'custom-control-input' %>
+        <%= form.label t('activerecord.attributes.field_form.visit_statuses.allowed'), class: 'custom-control-label', for: 'alowwedVisit' %>
+      </div>
+
+      <div class="custom-control custom-radio">
+        <%= form.radio_button :visit_status, :refused, id: 'refusedVisit', class: 'custom-control-input' %>
+        <%= form.label t('activerecord.attributes.field_form.visit_statuses.refused'), class: 'custom-control-label', for: 'refusedVisit' %>
+      </div>
+
+      <div class="custom-control custom-radio">
+        <%= form.radio_button :visit_status, :closed_location, id: 'closedLocationVisit', class: 'custom-control-input' %>
+        <%= form.label t('activerecord.attributes.field_form.visit_statuses.closed_location'), class: 'custom-control-label', for: 'closedLocationVisit' %>
+      </div>
+    </div>
+
+    <div class="form-group" id="visit-comment" style="display: none;">
+      <%= form.label :visit_comment, 'Observações de visita' %>
+      <%= form.text_area :visit_comment, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <div class="custom-control custom-control-right custom-switch">
+        <%= form.check_box :larvae_found, class: 'custom-control-input', id: 'larvae-found' %>
+        <%= form.label 'Foram encontradas larvas?', class: 'custom-control-label', for: 'larvae-found' %>
+      </div>
+    </div>
+
+    <div class="form-group" id="tube-components-group" style="display: none;">
+      <div id="btn-add-tube-div" class="col text-center" style="border: 0 !important;">
+        <%= link_to '#', id: 'btn-add-tube', class: 'btn bg-gradient-primary btn-sm' do %>
+          <i class="nav-icon fas fa-plus"></i>
+          Adicionar tubito
+        <% end %>
+      </div>
+
+      <br />
+
+      <div class="form-group">
+        <div class="custom-control custom-control-right custom-switch">
+          <%= form.check_box :larvicide, class: 'custom-control-input', id: 'larvicide' %>
+          <%= form.label :larvicide, class: 'custom-control-label', for: 'larvicide' %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="custom-control custom-control-right custom-switch">
+          <%= form.check_box :rodenticide, class: 'custom-control-input', id: 'rodenticide' %>
+          <%= form.label :rodenticide, class: 'custom-control-label', for: 'rodenticide' %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <%= link_to "#{translate 'actions.back'}", field_forms_path, class: 'btn btn-secondary' %>
+    <%= form.submit class: 'btn btn-primary' %>
+  </div>
+
+  <div class="modal fade" id="modal-add-tube">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 id="test-tube-model-title" class="modal-title">Tubito Nº #XCXC</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div>
+          <%= render TestTube.new %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<style>
+  div.custom-control-right {
+    padding-right: 24px;
+    padding-left: 0;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  div.custom-control-right .custom-control-label::after{
+    right: -1.5rem;
+    left: auto;
+  }
+
+  div.custom-control-right .custom-control-label::before {
+    right: -2.35rem;
+    left: auto;
+  }
+
+  .col {
+    border: solid 1px #6c757d;
+    padding: 10px;
+  }
+
+  i.fas.fa-times {
+    color: #B0ACAC;
+  }
+</style>
+
+<% content_for :current_page_js do %>
+  <script>
+      var testTubes = JSON.parse($('#field-form-test-tubes').val());
+      var $visitCommentDiv = $('div#visit-comment');
+      var $fieldFormZipcode = $('#field_form_zipcode');
+      var $visitCommentText = $('div#visit-comment textarea');
+      var $visitObaservation = $('label[for="field_form_visit_comment"]');
+      var $tubComponentsGroup = $('#tube-components-group');
+      var hashids = new Hashids.default(undefined, 10, "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890");
+
+      function setCookie(name, value, exdays) {
+          const d = new Date();
+          d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+
+          const expires = "expires="+d.toUTCString();
+          document.cookie = name + "=" + value + ";" + expires + ";path=/app";
+      };
+
+      function getCookie(name) {
+          const value = `; ${document.cookie}`;
+          const parts = value.split(`; ${name}=`);
+          if (parts.length === 2) return parts.pop().split(';').shift();
+      };
+
+      function getTestTubeCode() {
+          let timestamp = Math.round(new Date().getTime() / 1000);
+          let testTubeCode = hashids.encode(getCookie('user_id'), timestamp);
+
+          $('#test-tube-model-title').html(`Tubito Nº ${testTubeCode}`);
+          $('#test-tube-code').val(testTubeCode);
+      };
+
+      function resetTestTubeFields() {
+          $('#test-tube-code').val('');
+          $('#test_tube_shed_type_id').prop('selectedIndex',0);
+          $('#test_tube_collected_amount').val('');
+          $('#test_tube_comments').val('');
+      };
+
+      function registerTestTubes() {
+          let testTubesSize = testTubes.length;
+          let tube = {
+              code: $('#test-tube-code').val(),
+              shed_type_id: $('#test_tube_shed_type_id').val(),
+              shed_type_name: $('#test_tube_shed_type_id option:selected').text(),
+              collected_amount: $('#test_tube_collected_amount').val(),
+              comments: $('#test_tube_comments').val()
+          };
+
+          if (tube.shed_type_id !== '' || tube.collected_amount !== '' || tube.comments !== '') {
+              testTubes.push(tube);
+              $('#field-form-test-tubes').val(JSON.stringify(testTubes));
+
+              addTestTubeOnScreen(tube, testTubesSize);
+          }
+      };
+
+      function addTestTubeOnScreen(data, idx) {
+          let card = `<div class="col-sm-4">
+                  <div class="card card-outline card-info">
+                    <div class="card-header">
+                      <h3 class="card-title"><strong>Tubito:</strong> ${data.code}</h3>
+                      <div class="card-tools">
+                        <button type="button" class="btn btn-tool remove-test-tube-card" data-test-tube="${idx}" data-card-widget="remove"><i class="fas fa-times"></i>
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <strong>Local:</strong>
+                          ${data.shed_type_name}
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <strong>QTD.:</strong>
+                          ${data.collected_amount}
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <strong>Observações:</strong>
+                          ${data.comments}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>`
+          $(card).insertBefore($('#btn-add-tube-div'));
+      };
+
+      function areBaseFieldsValid() {
+          return $fieldFormZipcode.val() !== '' && $('#field_form_street').val() !== '' && $('#field_form_district').val() !== '' &&
+              $('#field_form_city').val() !== '' && $('#field_form_state').val() !== '' && $('#field_form_property_type_id').val() !== '' &&
+              $('input[name="field_form[visit_status]"]').is(':checked');
+      };
+
+      function validateForm() {
+          if ($('input[name=authenticity_token]').length > 1) {
+              $('input[name=authenticity_token]').last().remove();
+          }
+
+          if ($('input#larvae-found').is( ':checked')) {
+              areBaseFieldsValid() && testTubes.length > 0 ? $('#field-form-status').val('complete') : $('#field-form-status').val('pending');
+          } else {
+              areBaseFieldsValid() ? $('#field-form-status').val('complete') : $('#field-form-status').val('pending');
+              $('#field-form-test-tubes').val('');
+              $('input#larvicide').val('0');
+              $('input#rodenticide').val('0');
+          }
+      };
+
+      function revokeDisabledFieldsForSubmit() {
+          $(':disabled').each(function(e) {
+              $(this).removeAttr('disabled');
+          })
+      };
+
+      $(function() {
+          $(testTubes).each(function(idx) {
+              addTestTubeOnScreen(this, idx);
+          });
+
+          if ($('input#larvae-found').is( ':checked')) {
+              $tubComponentsGroup.show();
+          }
+
+          let radioValue = $('input[type="radio"]:checked').val() ? $('input[type="radio"]:checked').val().match(/(^closed_location$|^refused$)/) : null
+
+          if (radioValue !== null) {
+              $visitObaservation.html(`Observações de visita (${$('input[type="radio"]:checked').next().text().toLowerCase()})`);
+              $visitCommentDiv.show();
+          }
+      });
+
+      $fieldFormZipcode.blur(function() {
+          let zipcode = ($(this).val().match(/\d+/g) || []).join('');
+
+          if (zipcode.length === 8) {
+              $.ajax({
+                  method: 'GET',
+                  url: `https://viacep.com.br/ws/${zipcode}/json/`
+              }).done(function(data) {
+                  $('#field_form_street').val(data.logradouro);
+                  $('#field_form_district').val(data.bairro);
+                  $('#field_form_city').val(data.localidade);
+                  $('#field_form_state').val(data.uf);
+              });
+          }
+      });
+
+      $('input[type="radio"]').on('click change', function() {
+          let radioValue = $(this).val().match(/(^closed_location$|^refused$)/);
+
+          if (radioValue !== null) {
+              $visitObaservation.html(`Observações de visita (${$(this).next().text().toLowerCase()})`);
+              $visitCommentDiv.show();
+          } else {
+              $visitCommentDiv.hide();
+              $visitCommentText.val('');
+          }
+      });
+
+      $('input#larvae-found').change(function() {
+          if ($('input#larvae-found').is( ':checked')) {
+              $tubComponentsGroup.show();
+          } else {
+              $tubComponentsGroup.hide();
+          }
+      });
+
+      $('#btn-add-tube').on('click', function(e) {
+          e.stopPropagation();
+          resetTestTubeFields();
+          getTestTubeCode();
+          $('#modal-add-tube').modal('show');
+      });
+
+      $('#add-test-tube-form-btn').on('click', function(e) {
+          e.stopPropagation();
+          registerTestTubes();
+          $('#modal-add-tube').modal('hide');
+          resetTestTubeFields();
+          $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+      });
+
+      $('body').on('click', 'button.remove-test-tube-card', function(e) {
+          e.stopPropagation();
+          let tubeIdx = $(this).data('test-tube');
+          testTubes.splice(tubeIdx, 1);
+          $('#field-form-test-tubes').val(JSON.stringify(testTubes));
+      });
+
+      $('form').submit(function(e) {
+          validateForm();
+          revokeDisabledFieldsForSubmit();
+      });
+  </script>
+<% end %>

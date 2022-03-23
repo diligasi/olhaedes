@@ -4,8 +4,7 @@ class HomeController < ApplicationController
     if current_admin_user.present?
       redirect_to_role_home
     elsif current_user.present?
-      # redirect_to controller: 'pwa/field_forms', action: 'index'
-      render plain: 'pwa/field_forms'
+      redirect_to controller: 'pwa/field_forms', action: 'index'
     else
       redirect_to controller: 'pwa/auth/sessions', action: 'new'
     end
