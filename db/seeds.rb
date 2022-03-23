@@ -45,5 +45,5 @@ end
   { name: 'Culex quinquefasciatus', description: '' },
   { name: 'Outras', description: '' }
 ].each do |larva_specy|
-  LarvaSpecy.find_or_create_by(larva_specy)
+  LarvaSpecies.find_or_create_by(larva_specy)
 end
