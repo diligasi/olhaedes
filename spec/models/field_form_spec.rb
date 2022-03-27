@@ -43,7 +43,6 @@ RSpec.describe FieldForm, type: :model do
       let(:by_address_field_form) { create :field_form }
 
       it 'includes field forms with the given address' do
-        binding.pry
         expect(FieldForm.by_address(by_address_field_form.street)).to include(by_address_field_form)
       end
 
