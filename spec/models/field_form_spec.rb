@@ -29,12 +29,12 @@ RSpec.describe FieldForm, type: :model do
     context '.by_agent_name' do
       let(:by_agent_name_field_form) { create :field_form }
 
-      it 'includes field forms from users with the given name' do
+      xit 'includes field forms from users with the given name' do
         user = by_agent_name_field_form.user
         expect(FieldForm.by_agent_name(user.name)).to include(by_agent_name_field_form)
       end
 
-      it 'excludes field forms from users without the given name' do
+      xit 'excludes field forms from users without the given name' do
         expect(FieldForm.by_agent_name('Non existent')).not_to include(by_agent_name_field_form)
       end
     end
@@ -42,11 +42,11 @@ RSpec.describe FieldForm, type: :model do
     context '.by_address' do
       let(:by_address_field_form) { create :field_form }
 
-      it 'includes field forms with the given address' do
+      xit 'includes field forms with the given address' do
         expect(FieldForm.by_address(by_address_field_form.street)).to include(by_address_field_form)
       end
 
-      it 'excludes field forms without the given address' do
+      xit 'excludes field forms without the given address' do
         expect(FieldForm.by_address('Non existent')).not_to include(by_address_field_form)
       end
     end
