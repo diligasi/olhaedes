@@ -8,7 +8,7 @@ class Admin::LarvaeController < Admin::AdminController
 
     respond_to do |format|
       if @larva.save
-        format.html { redirect_to admin_field_form_path(@larva.test_tube.field_form), notice: 'Espécie adicionado com sucesso.' }
+        format.html { redirect_to admin_field_form_path(@larva.test_tube.field_form, updated_tube: @larva.test_tube.code), notice: 'Espécie adicionado com sucesso.' }
         format.json { head :no_content }
       else
         format.html { redirect_to admin_field_form_path(@larva.test_tube.field_form), alert: @larva.errors.full_messages.join(', ') }

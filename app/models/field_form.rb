@@ -23,6 +23,8 @@ class FieldForm < ApplicationRecord
   validates :visit_status, inclusion: { in: visit_statuses.keys }
   validates :larvae_found, inclusion: { in: [true, false] }
 
+  before_save :set_status
+
   scope :completed, -> {
     where(status: 'complete').distinct
   }
@@ -39,14 +41,14 @@ class FieldForm < ApplicationRecord
 
   scope :by_agent_name, lambda { |name|
     joins(:user)
-      .where('lower(users.name) like ?', "%#{name.downcase}%")
+      .where('unaccent(lower(users.name)) like ?', "%#{name.downcase}%")
   }
 
   scope :by_address, lambda { |term|
-    where('lower(street) like :like or
-            lower(complement) like :like or
-            lower(district) like :like or
-            lower(block) like :like or
+    where('unaccent(lower(street)) like :like or
+            unaccent(lower(complement)) like :like or
+            unaccent(lower(district)) like :like or
+            unaccent(lower(block)) like :like or
             number = :equal or
             zipcode = :equal',
           like: "%#{term.downcase}%", equal: term)
@@ -90,5 +92,15 @@ class FieldForm < ApplicationRecord
   # are being saved in the database.
   def zipcode=(value)
     super(value.try(:delete, '^0-9'))
+  end
+
+  private
+
+  def set_status
+    self.status = if !self.larvae_found || (test_tubes.all? { |tube| tube.larvae.size == tube.collected_amount })
+                    :complete
+                  else
+                    :pending
+                  end
   end
 end

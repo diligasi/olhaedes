@@ -6,7 +6,8 @@ class Admin::FieldFormsController < Admin::AdminController
   def index
     @field_forms = FieldForm.includes(:test_tubes, user: [region: [:department]])
     @field_forms = @field_forms.where(users: { regions: { department: current_admin_user.region&.department } }) unless current_admin_user.admin?
-    @field_forms = @field_forms.order('departments.id desc, field_forms.created_at, field_forms.status').page(page).per(per_page)
+    @field_forms = @field_forms.order('departments.id desc, field_forms.created_at, field_forms.status, field_forms.larvae_found')
+    @field_forms = @field_forms.reorder('field_forms.status, field_forms.created_at, field_forms.larvae_found, departments.id desc').page(page).per(per_page)
   end
 
   def show; end

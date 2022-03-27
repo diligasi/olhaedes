@@ -19,10 +19,12 @@ module Admin::FieldForms
       query = query.by_field_form_status(params[:by_field_form_status]) if params[:by_field_form_status].present?
       query = query.by_property_type(params[:by_property_type]) if params[:by_property_type].present?
       query = query.by_shed_type(params[:by_shed_type]) if params[:by_shed_type].present?
-      query = query.by_larva_species(params[:by_larva_specy]) if params[:by_larva_specy].present?
+      query = query.by_larva_species(params[:by_larva_species]) if params[:by_larva_species].present?
       query = query.by_larvae_amount(params[:by_larvae_amount]) if params[:by_larvae_amount].present?
 
-      @field_forms = query.order('departments.id desc, field_forms.created_at, field_forms.status').page(page).per(per_page)
+      # @field_forms = query.order('departments.id desc, field_forms.created_at, field_forms.status').page(page).per(per_page)
+      query = query.order('departments.id desc, field_forms.created_at, field_forms.status')
+      @field_forms = query.reorder('field_forms.status, field_forms.created_at, field_forms.larvae_found, departments.id desc').page(page).per(per_page)
 
       render 'admin/field_forms/index'
     end

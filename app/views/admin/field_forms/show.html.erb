@@ -100,9 +100,20 @@
   <script>
       $(function() {
           $('a[data-test-tube]').on('click', function(e) {
-              let value = $(e.target).data('test-tube');
+              let value = $(e.target).closest('a[data-test-tube]').data('test-tube');
               $('#larva_test_tube_id').val(value);
           });
+      });
+
+      $(function() {
+          let queryString = window.location.search;
+          let urlParams = new URLSearchParams(queryString);
+          let updatedTube = urlParams.get('updated_tube');
+          let testTubeBlock = $(`.card-title i:contains('${updatedTube}')`).closest('div.card-header.collapsed');
+
+          if (testTubeBlock.length == 1) {
+              testTubeBlock.trigger('click');
+          }
       });
   </script>
 <% end %>

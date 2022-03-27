@@ -49,7 +49,7 @@
     <div class="col-md-3">
       <div class="form-group">
         <%= label_tag('Espécie', nil, class: 'control-label') %><br />
-        <%= select_tag(:by_larva_specy, options_for_select(LarvaSpecies.pluck(:name, :id), params[:by_larva_specy]), prompt: 'Espécie coletada', class: 'form-control') %>
+        <%= select_tag(:by_larva_species, options_for_select(LarvaSpecies.pluck(:name, :id), params[:by_larva_species]), prompt: 'Espécie coletada', class: 'form-control') %>
       </div>
     </div>
   </div>

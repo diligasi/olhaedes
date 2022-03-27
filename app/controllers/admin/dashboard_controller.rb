@@ -30,7 +30,7 @@ class Admin::DashboardController < Admin::AdminController
     # Observações
 
     field_forms_base_query = FieldForm.based_on_role_for(current_user)
-                                      .by_dashboard_range(dashboard_date_range)
+                                      .by_dashboard_range(dashboard_date_range).distinct
 
     shed_type_base_query   = ShedType.based_on_role_for(current_user)
                                      .contaminated_places_per_range(dashboard_date_range)
@@ -69,8 +69,8 @@ class Admin::DashboardController < Admin::AdminController
                                       .group_by { |hsh| hsh[:specie].itself }
                                       .map do |key, val|
                                         { name: key, data: val.map do |q|
-                                        { q.region => q.count }
-                                      end.reduce({}, :merge) }
+                                          { q.region => q.count }
+                                        end.reduce({}, :merge) }
                                       end
   end
 
