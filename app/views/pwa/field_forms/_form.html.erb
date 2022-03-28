@@ -179,6 +179,7 @@
       var $visitObaservation = $('label[for="field_form_visit_comment"]');
       var $tubComponentsGroup = $('#tube-components-group');
       var hashids = new Hashids.default(undefined, 10, "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890");
+      var currentRegion = "<%= current_user.region.name.upcase %>";
 
       function setCookie(name, value, exdays) {
           const d = new Date();
@@ -198,8 +199,8 @@
           let timestamp = Math.round(new Date().getTime() / 1000);
           let testTubeCode = hashids.encode(getCookie('user_id'), timestamp);
 
-          $('#test-tube-model-title').html(`Tubito Nº ${testTubeCode}`);
-          $('#test-tube-code').val(testTubeCode);
+          $('#test-tube-model-title').html(`Tubito Nº ${currentRegion}-${testTubeCode}`);
+          $('#test-tube-code').val(`${currentRegion}-${testTubeCode}`);
       };
 
       function resetTestTubeFields() {
