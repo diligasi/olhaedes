@@ -22,7 +22,6 @@ module Admin::FieldForms
       query = query.by_larva_species(params[:by_larva_species]) if params[:by_larva_species].present?
       query = query.by_larvae_amount(params[:by_larvae_amount]) if params[:by_larvae_amount].present?
 
-      # @field_forms = query.order('departments.id desc, field_forms.created_at, field_forms.status').page(page).per(per_page)
       query = query.order('departments.id desc, field_forms.created_at, field_forms.status')
       @field_forms = query.reorder('field_forms.status, field_forms.created_at, field_forms.larvae_found, departments.id desc').page(page).per(per_page)
 
