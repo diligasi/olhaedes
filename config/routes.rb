@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root 'home#handler'
 
+  get 'manifest.json'  => 'home#manifest'
+
   namespace :admin do
     devise_for :users, path: '', controllers: {
       sessions: 'admin/auth/sessions',

@@ -10,6 +10,8 @@ class HomeController < ApplicationController
     end
   end
 
+  def manifest; end
+
   private
 
   def redirect_to_role_home

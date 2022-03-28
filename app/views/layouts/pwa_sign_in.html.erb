@@ -58,3 +58,13 @@
     </div>
   </body>
 </html>
+
+<script>
+  $(async function () {
+      const installedAppsArray = await navigator.getInstalledRelatedApps();
+
+      if (installedAppsArray.length > 0) {
+          $('#dashboard').hide();
+      }
+  });
+</script>
