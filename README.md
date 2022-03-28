@@ -21,9 +21,10 @@ This application is basically divided into 3 modules:
 
 # Dependencies
 
-- Ruby Version  `3.1.0`
+- Ruby Version  `3.1.1`
 - Rails Version  `7.0.2`
 - Database  `PostgreSQL`
+- In-memory Data Structure `Redis`
 - Rails Server  `Puma`
 
 # Installation
