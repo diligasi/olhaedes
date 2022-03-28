@@ -40,17 +40,25 @@
               </thead>
 
               <tbody>
-                <% @field_forms.each do |field_form| %>
+                <% if @field_forms.empty?  %>
                   <tr>
-                    <td>
-                      <%= link_to field_form_path(field_form), class: 'btn btn-block bg-gradient-info btn-sm' do %>
-                        <i class="nav-icon far fa-folder-open"></i>
-                      <% end %>
+                    <td colspan="4" style="text-align: center;">
+                      Sem registros para exibição. 😅
                     </td>
-                    <td><%= field_form_filled_list_status_component(field_form) %></td>
-                    <td><%= field_form_list_address(field_form) %></td>
-                    <td><%= field_form.created_at.strftime('%d/%m/%Y') %></td>
                   </tr>
+                <% else  %>
+                  <% @field_forms.each do |field_form| %>
+                    <tr>
+                      <td>
+                        <%= link_to field_form_path(field_form), class: 'btn btn-block bg-gradient-info btn-sm' do %>
+                          <i class="nav-icon far fa-folder-open"></i>
+                        <% end %>
+                      </td>
+                      <td><%= field_form_filled_list_status_component(field_form) %></td>
+                      <td><%= field_form_list_address(field_form) %></td>
+                      <td><%= field_form.created_at.strftime('%d/%m/%Y') %></td>
+                    </tr>
+                  <% end %>
                 <% end %>
               </tbody>
             </table>

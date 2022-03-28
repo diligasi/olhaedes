@@ -50,7 +50,6 @@
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>#</th>
                   <th>Agente</th>
                   <th>Endereço</th>
                   <th>Presença de larva</th>
@@ -69,7 +68,6 @@
                 <% else  %>
                   <% @field_forms.each do |field_form| %>
                     <tr>
-                      <td><%= field_form.id %></td>
                       <td><%= field_form.user.name %></td>
                       <td><%= field_form_list_address(field_form) %></td>
                       <td><%= field_form_list_larvae_status_component(field_form.larvae_found) %></td>
