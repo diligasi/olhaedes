@@ -97,7 +97,7 @@ class FieldForm < ApplicationRecord
   private
 
   def set_status
-    self.status = if !self.larvae_found || (test_tubes.all? { |tube| tube.larvae.size == tube.collected_amount })
+    self.status = if !self.larvae_found || (test_tubes.present? && test_tubes.all? { |tube| tube.larvae.size == tube.collected_amount })
                     :complete
                   else
                     :pending

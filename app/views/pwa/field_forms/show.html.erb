@@ -186,7 +186,12 @@
 
           <div class="card-footer">
             <%= link_to "#{translate 'actions.back'}", field_forms_path, class: 'btn btn-secondary' %>
-            <%= link_to("#{translate 'actions.edit'}", edit_field_form_path(@field_form), class: 'btn btn-primary') if can? :edit, @field_form %>
+            <%= link_to("#{translate 'actions.edit'}", edit_field_form_path(@field_form), class: 'btn btn-primary') if can?(:edit, @field_form) && !(!@field_form.larvae_found ||
+                                                                                                                                                    (@field_form.larvae_found &&
+                                                                                                                                                      @field_form.test_tubes.size.positive? &&
+                                                                                                                                                      @field_form.test_tubes.sum {
+                                                                                                                                                        |x| x.collected_amount.to_i
+                                                                                                                                                      }.positive?)) %>
           </div>
         </div>
       </div>

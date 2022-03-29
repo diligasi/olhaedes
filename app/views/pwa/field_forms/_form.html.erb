@@ -88,6 +88,20 @@
 
     <div class="form-group">
       <div class="custom-control custom-control-right custom-switch">
+        <%= form.check_box :larvicide, class: 'custom-control-input', id: 'larvicide' %>
+        <%= form.label :larvicide, class: 'custom-control-label', for: 'larvicide' %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="custom-control custom-control-right custom-switch">
+        <%= form.check_box :rodenticide, class: 'custom-control-input', id: 'rodenticide' %>
+        <%= form.label :rodenticide, class: 'custom-control-label', for: 'rodenticide' %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="custom-control custom-control-right custom-switch">
         <%= form.check_box :larvae_found, class: 'custom-control-input', id: 'larvae-found' %>
         <%= form.label 'Foram encontradas larvas?', class: 'custom-control-label', for: 'larvae-found' %>
       </div>
@@ -99,22 +113,6 @@
           <i class="nav-icon fas fa-plus"></i>
           Adicionar tubito
         <% end %>
-      </div>
-
-      <br />
-
-      <div class="form-group">
-        <div class="custom-control custom-control-right custom-switch">
-          <%= form.check_box :larvicide, class: 'custom-control-input', id: 'larvicide' %>
-          <%= form.label :larvicide, class: 'custom-control-label', for: 'larvicide' %>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div class="custom-control custom-control-right custom-switch">
-          <%= form.check_box :rodenticide, class: 'custom-control-input', id: 'rodenticide' %>
-          <%= form.label :rodenticide, class: 'custom-control-label', for: 'rodenticide' %>
-        </div>
       </div>
     </div>
   </div>
@@ -366,6 +364,7 @@
           let tubeIdx = $(this).data('test-tube');
           testTubes.splice(tubeIdx, 1);
           $('#field-form-test-tubes').val(JSON.stringify(testTubes));
+          e.target.closest('.col-sm-4').remove()
       });
 
       $('form').submit(function(e) {
