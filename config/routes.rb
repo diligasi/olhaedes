@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   root 'home#handler'
 
-  get 'manifest.json'  => 'home#manifest'
+  get 'manifest.json'     => 'home#manifest'
+  get 'service-worker.js' => 'home#service_worker'
 
   namespace :admin do
     devise_for :users, path: '', controllers: {

@@ -1,0 +1,92 @@
+const version = '<%= ENV['HEROKU_RELEASE_VERSION'] %>';
+const staticCacheName = `olhaedes-cache-${version}`;
+const filesToCache = [
+  '<%= asset_path "favicon.ico" %>',
+  '<%= asset_path "pwa.css" %>',
+  '<%= asset_path "pwa.js" %>',
+  '<%= asset_path "user-avatar.jpg" %>',
+  '<%= asset_path "application.js" %>',
+  '<%= asset_path "turbo.min.js" %>',
+  '<%= asset_path "stimulus.min.js" %>',
+  '<%= asset_path "stimulus-loading.js" %>',
+  '<%= app_root_url %>',
+  '<%= field_forms_url %>',
+  '<%= new_field_form_url %>',
+  '<%= institutional_index_url %>',
+  '<%= faqs_url %>',
+  '/manifest.json',
+  '/offline.html',
+  'https://cdn.pixabay.com/photo/2016/06/18/14/35/mosquito-1465063_1280.png',
+  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css',
+  'https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css',
+  'https://cdnjs.cloudflare.com/ajax/libs/icheck-bootstrap/3.0.1/icheck-bootstrap.min.css',
+  'https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.0.5/css/adminlte.min.css',
+  'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700',
+  'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.0.5/js/adminlte.min.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/hashids/2.2.2/hashids.min.js',
+  'https://adminlte.io/themes/v3/plugins/fontawesome-free/css/all.min.css',
+  'https://adminlte.io/themes/v3/dist/css/adminlte.min.css?v=3.2.0',
+  'https://adminlte.io/themes/v3/plugins/jquery/jquery.min.js',
+  'https://adminlte.io/themes/v3/plugins/bootstrap/js/bootstrap.bundle.min.js',
+  'https://img.icons8.com/fluency/240/000000/wifi-off.png'
+];
+
+self.addEventListener('install', installHandler);
+self.addEventListener('activate', activeHandler);
+self.addEventListener('fetch', fetchHandler);
+
+// Handler and helper functions section =======================================
+
+function installHandler(event) {
+    console.info('[Service Worker] Installing.');
+
+    event.waitUntil((async () => {
+        caches.open(staticCacheName)
+            .then(cache => {
+                return cache.addAll(filesToCache);
+            });
+    })());
+}
+
+function activeHandler(_) {
+    console.info('[Service Worker] Activated.');
+}
+
+function fetchHandler(event) {
+    console.info('[Service Worker] Fetching.');
+
+    const requestURL = new URL(event.request.url);
+
+    if (requestURL.hostname == 'viacep.com.br') {
+        return;
+    }
+
+    event.respondWith((async () => {
+        // Try to access content from cache before the server
+        const cacheResponse = await caches.match(event.request);
+        if (cacheResponse) {
+            console.info(`[Service Worker] Fetching resource from cache: ${event.request.url}`);
+
+            return cacheResponse;
+        }
+
+        // Try to access content from server after unsuccessful cache
+        // attempt, returns offline page in case of any problems.
+        const requestResponse = await fetch(event.request).catch(function(error) {
+            console.warn(`[Service Worker] Error: ${error}`);
+
+            return caches.match('/offline.html');
+        });
+
+        if (requestResponse) {
+            const cache = await caches.open(staticCacheName);
+            console.info(`[Service Worker] Caching new resource: ${event.request.url}`);
+            cache.put(event.request, requestResponse.clone());
+
+            return requestResponse;
+        }
+    })());
+}

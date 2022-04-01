@@ -291,6 +291,28 @@
           })
       };
 
+      function insertAddressManually() {
+          $('#field_form_street').removeAttr('disabled');
+          $('#field_form_street').val('');
+
+          $('#field_form_district').removeAttr('disabled');
+          $('#field_form_district').val('');
+
+          $('#field_form_city').removeAttr('disabled');
+          $('#field_form_city').val('');
+
+          $('#field_form_state').removeAttr('disabled');
+          $('#field_form_state').val('');
+
+          $(document).Toasts('create', {
+              title: 'Status da ação',
+              body: 'Insira endereço manualmente.',
+              class: 'bg-danger',
+              autohide: true,
+              delay: 5500
+          });
+      }
+
       $(function() {
           $(testTubes).each(function(idx) {
               addTestTubeOnScreen(this, idx);
@@ -314,12 +336,29 @@
           if (zipcode.length === 8) {
               $.ajax({
                   method: 'GET',
-                  url: `https://viacep.com.br/ws/${zipcode}/json/`
-              }).done(function(data) {
-                  $('#field_form_street').val(data.logradouro);
-                  $('#field_form_district').val(data.bairro);
-                  $('#field_form_city').val(data.localidade);
-                  $('#field_form_state').val(data.uf);
+                  url: `https://viacep.com.br/ws/${zipcode}/json/`,
+                  success: function(data) {
+                      if (data.erro) {
+                          insertAddressManually();
+                      } else {
+                          $('#field_form_street').attr('disabled', 'disabled');
+                          $('#field_form_street').val(data.logradouro);
+
+                          $('#field_form_district').attr('disabled', 'disabled');
+                          $('#field_form_district').val(data.bairro);
+
+                          $('#field_form_city').attr('disabled', 'disabled');
+                          $('#field_form_city').val(data.localidade);
+
+                          $('#field_form_state').attr('disabled', 'disabled');
+                          $('#field_form_state').val(data.uf);
+                      }
+                  },
+                  error: function(error) {
+                      console.warn(`[ViaCep] Request error: ${error}`);
+
+                      insertAddressManually();
+                  }
               });
           }
       });

@@ -1,20 +1,20 @@
 window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js').then(registration => {
-        console.log('ServiceWorker registered: ', registration);
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js', { scope: '/app' }).then(registration => {
+            console.info('[Service Worker] Registered: ', registration);
 
-        let serviceWorker;
-
-        if (registration.installing) {
-            serviceWorker = registration.installing;
-            console.log('Service worker installing.');
-        } else if (registration.waiting) {
-            serviceWorker = registration.waiting;
-            console.log('Service worker installed & waiting.');
-        } else if (registration.active) {
-            serviceWorker = registration.active;
-            console.log('Service worker active.');
-        }
-    }).catch(registrationError => {
-        console.log('Service worker registration failed: ', registrationError);
-    });
+            if (registration.installing) {
+                registration.installing;
+                console.info('[Service Worker] Installing.');
+            } else if (registration.waiting) {
+                registration.waiting;
+                console.info('[Service Worker] Installed & Waiting.');
+            } else if (registration.active) {
+                registration.active;
+                console.info('[Service Worker] Active.');
+            }
+        }).catch(registrationError => {
+            console.warn(`[Service Worker] Registration Failed: ${registrationError}`);
+        });
+    }
 });

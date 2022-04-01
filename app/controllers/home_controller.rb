@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: :service_worker
 
   def handler
     if current_admin_user.present?
@@ -11,6 +12,8 @@ class HomeController < ApplicationController
   end
 
   def manifest; end
+
+  def service_worker; end
 
   private
 
