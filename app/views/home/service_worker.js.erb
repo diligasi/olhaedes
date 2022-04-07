@@ -1,5 +1,6 @@
 const version = '<%= ENV['HEROKU_RELEASE_VERSION'] %>';
 const staticCacheName = `olhaedes-cache-${version}`;
+const dbName = 'olhaedes_db';
 const filesToCache = [
   '<%= asset_path "favicon.ico" %>',
   '<%= asset_path "pwa.css" %>',
@@ -34,9 +35,14 @@ const filesToCache = [
   'https://img.icons8.com/fluency/240/000000/wifi-off.png'
 ];
 
+let offlineDB;
+
 self.addEventListener('install', installHandler);
 self.addEventListener('activate', activeHandler);
 self.addEventListener('fetch', fetchHandler);
+self.addEventListener('sync', syncHandler);
+
+openDatabase();
 
 // Handler and helper functions section =======================================
 
@@ -58,35 +64,171 @@ function activeHandler(_) {
 function fetchHandler(event) {
     console.info('[Service Worker] Fetching.');
 
-    const requestURL = new URL(event.request.url);
+    const eventRequest = event.request.clone();
+    const requestURL   = new URL(eventRequest.url);
 
     if (requestURL.hostname == 'viacep.com.br') {
         return;
     }
 
-    event.respondWith((async () => {
-        // Try to access content from cache before the server
-        const cacheResponse = await caches.match(event.request);
-        if (cacheResponse) {
-            console.info(`[Service Worker] Fetching resource from cache: ${event.request.url}`);
+    if (requestURL.href.match(/^.+(\/app\/field_forms)$/) && eventRequest.method == 'POST' && navigator.onLine) {
+        return;
+    }
 
-            return cacheResponse;
+    event.respondWith((async () => {
+        if (requestURL.href.match(/^.+(\/app\/field_forms)$/) && eventRequest.method == 'POST' && !navigator.onLine) {
+            console.log('[Service Worker] No network availability, enqueuing...');
+
+            let formDataObj = {};
+
+            eventRequest.mode
+            eventRequest.headers
+
+            eventRequest.formData().then(formData => {
+                for (let pair of formData.entries()) {
+                    let key   = pair[0];
+                    let value = pair[1];
+
+                    formDataObj[key] = value;
+                }
+            }).then(() => {
+                savePostRequests(eventRequest.url, formDataObj);
+            }).then(() => {
+                return caches.match('/app');
+            });
         }
 
-        // Try to access content from server after unsuccessful cache
-        // attempt, returns offline page in case of any problems.
-        const requestResponse = await fetch(event.request).catch(function(error) {
-            console.warn(`[Service Worker] Error: ${error}`);
+        const requestResponse = await fetch(eventRequest).catch(async (error) => {
+            console.warn(`[Service Worker] Failed to request online: ${error}`);
+
+            const cacheResponse = await caches.match(eventRequest);
+
+            if (cacheResponse) {
+                console.info(`[Service Worker] Fetching resource from cache: ${eventRequest.url}`);
+                return cacheResponse;
+            }
 
             return caches.match('/offline.html');
         });
 
         if (requestResponse) {
             const cache = await caches.open(staticCacheName);
-            console.info(`[Service Worker] Caching new resource: ${event.request.url}`);
-            cache.put(event.request, requestResponse.clone());
+            console.info(`[Service Worker] Caching new resource: ${eventRequest.url}`);
+            cache.put(eventRequest, requestResponse.clone());
 
             return requestResponse;
         }
     })());
+}
+
+function syncHandler(event) {
+    console.log('[Service Worker] Now Online.');
+
+    if (event.tag === 'sendFormData') {
+        event.waitUntil(sendPostToServer());
+    }
+}
+
+function openDatabase() {
+    let documentName = 'field_forms';
+    let indexedDBOpenRequest = indexedDB.open(dbName, Number(version.match(/\d+/)[0]));
+
+    indexedDBOpenRequest.onerror = function(error) {
+        console.warn('[Service Worker] IndexedDB error: ', error);
+    }
+
+    indexedDBOpenRequest.onupgradeneeded = function() {
+        if (this.result.objectStoreNames.contains(documentName)) {
+            this.result.deleteObjectStore(documentName);
+        }
+
+        this.result.createObjectStore(documentName, { autoIncrement:  true, keyPath: 'id' });
+    }
+
+    indexedDBOpenRequest.onsuccess = function() {
+        offlineDB = this.result;
+    }
+}
+
+function savePostRequests(url, payload) {
+    let request = getObjectStore('field_forms', 'readwrite').add({
+        url: url,
+        payload: payload,
+        method: 'POST'
+    });
+
+    request.onsuccess = function(event) {
+        console.log('[Service Worker] A new POST request has been added to indexedb');
+    }
+
+    request.onerror = function (error) {
+        console.warn(error);
+    }
+}
+
+function getObjectStore(storeName, mode) {
+    return offlineDB.transaction(storeName, mode).objectStore(storeName);
+}
+
+function sendPostToServer() {
+    let savedRequests = [];
+    let req = getObjectStore('field_forms').openCursor();
+
+    req.onsuccess = async function(event) {
+        let cursor = event.target.result;
+
+        if (cursor) {
+            savedRequests.push(cursor.value);
+            cursor.continue();
+        } else {
+            for (let savedRequest of savedRequests) {
+                console.log('[Service Worker] Saved request', savedRequest);
+
+                let requestUrl = savedRequest.url;
+                let payload = normalizePayload(savedRequest.payload);
+                let method = savedRequest.method;
+                let headers = {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                };
+
+                fetch(requestUrl, {
+                    headers: headers,
+                    method: method,
+                    body: payload
+                }).then(function(response) {
+                    console.log('[Service Worker] Server response', response);
+
+                    if (response.status < 400) {
+                        getObjectStore('field_forms', 'readwrite').delete(savedRequest.id);
+                    }
+                }).catch(function(error) {
+                    console.error('[Service Worker] Send to Server failed:', error);
+
+                    // Since we are in a catch, it is important an error is
+                    // thrown,so the background sync knows to keep retrying
+                    // the send to server
+                    throw error;
+                });
+            }
+
+            location.reload(true);
+        }
+    }
+}
+
+function normalizePayload(payload) {
+    let resultObj = { 'field_form': {} };
+
+    for (let key of Object.keys(payload)) {
+        if (key.includes('field_form[')) {
+            let processedKey = key.replace(/field_form\[/, '').replace(/\]/, '');
+
+            resultObj['field_form'][processedKey] = payload[key];
+        } else {
+            resultObj[key] = payload[key];
+        }
+    }
+
+    return JSON.stringify(resultObj);
 }

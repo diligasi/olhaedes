@@ -1,5 +1,7 @@
 class Pwa::FieldFormsController < Pwa::PwaController
-  load_and_authorize_resource
+  protect_from_forgery with: :null_session, only: :create
+
+  load_and_authorize_resource except: :create
 
   before_action :set_field_form, only: %i[ show edit update ]
 

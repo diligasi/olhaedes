@@ -16,5 +16,14 @@ window.addEventListener('load', () => {
         }).catch(registrationError => {
             console.warn(`[Service Worker] Registration Failed: ${registrationError}`);
         });
+
+        navigator.serviceWorker.ready.then(function(registration) {
+            console.info('[Service Worker] Service Worker Ready');
+            return registration.sync.register('sendFormData');
+        }).then(function() {
+            console.info('[Service Worker] Sync event registered.');
+        }).catch(function(error) {
+            console.warn(`[Service Worker] Sync Registration Failed: ${error}`);
+        });
     }
 });
