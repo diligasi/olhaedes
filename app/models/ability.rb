@@ -17,7 +17,8 @@ class Ability
     if user.lab?
       can :manage, User, id: user.id
       can %i[index read], [Faq, Institutional]
-      can %i[index read update], FieldForm, user: { region: { department: user.region.department } }, status: :pending
+      can %i[index read], FieldForm, user: { region: { department: user.region.department } }
+      can %i[update], FieldForm, user: { region: { department: user.region.department } }, status: :pending
     end
 
     if user.supervisor?
