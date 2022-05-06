@@ -136,7 +136,7 @@
             hiddenInputName: 'institutional[phone_numbers][]'
         });
 
-        <% institutional.phone_numbers.split(',').each do |number| %>
+        <% Array.wrap(institutional&.phone_numbers&.split(',')).each do |number| %>
           phone_numbers.add('<%= number %>');
         <% end %>
     });
