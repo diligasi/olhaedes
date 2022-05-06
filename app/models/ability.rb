@@ -18,6 +18,7 @@ class Ability
       can :manage, User, id: user.id
       can %i[index read], [Faq, Institutional]
       can %i[index read], FieldForm, user: { region: { department: user.region.department } }
+      can %i[create], Larva
       can %i[update], FieldForm, user: { region: { department: user.region.department } }, status: :pending
     end
 
