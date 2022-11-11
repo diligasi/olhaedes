@@ -126,6 +126,7 @@ function syncHandler(event) {
 
     if (event.tag === 'sendFormData') {
         event.waitUntil(sendPostToServer());
+        return fetch('/app');
     }
 }
 
@@ -211,8 +212,6 @@ function sendPostToServer() {
                     throw error;
                 });
             }
-
-            location.reload(true);
         }
     }
 }

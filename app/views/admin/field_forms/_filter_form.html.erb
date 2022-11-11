@@ -62,7 +62,14 @@
       </div>
     </div>
 
-    <div class="col-md-7">
+    <div class="col-md-3">
+      <div class="form-group">
+        <%= label_tag('Número do tubito', nil, class: 'control-label') %><br />
+        <%= text_field_tag(:by_test_tube, params[:by_test_tube], placeholder: 'Buscar por tubito', class: 'form-control') %>
+      </div>
+    </div>
+
+    <div class="col-md-4">
       <div class="form-group">
         <label for="User">&nbsp;</label><br />
       </div>

@@ -83,6 +83,11 @@ class FieldForm < ApplicationRecord
       .where(test_tubes: { collected_amount: amount })
   }
 
+  scope :by_test_tube, lambda { |code|
+    joins(:test_tubes)
+      .where("lower(test_tubes.code) like ?", "%#{code.downcase}%")
+  }
+
   scope :by_dashboard_range, lambda { |date_range|
     left_outer_joins(:test_tubes, user: [region: [:department]])
       .where({ field_forms: { created_at: date_range } })

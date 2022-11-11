@@ -21,6 +21,7 @@ module Admin::FieldForms
       query = query.by_shed_type(params[:by_shed_type]) if params[:by_shed_type].present?
       query = query.by_larva_species(params[:by_larva_species]) if params[:by_larva_species].present?
       query = query.by_larvae_amount(params[:by_larvae_amount]) if params[:by_larvae_amount].present?
+      query = query.by_test_tube(params[:by_test_tube]) if params[:by_test_tube].present?
 
       query = query.order('departments.id desc, field_forms.created_at, field_forms.status')
       @field_forms = query.reorder('field_forms.status, field_forms.created_at, field_forms.larvae_found, departments.id desc').page(page).per(per_page)
